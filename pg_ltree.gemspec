@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.version     = PgLtree::VERSION
   s.authors     = ["Andrei Panamarenka"]
   s.email       = ["andrei.panamarenka@gmail.com"]
-  s.homepage    = "https://github.com/sjke/pg_lree"
+  s.homepage    = "https://github.com/sjke/pg_ltree"
   s.summary     = "Organise ActiveRecord model into a tree structure with PostgreSQL LTree"
   s.description = "Organise ActiveRecord model into a tree structure with PostgreSQL LTree (Use clean ltree without additional fields)"
   s.license     = "MIT"
