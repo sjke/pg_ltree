@@ -1,0 +1,6 @@
+.DS_Store
+*.gem
+**/*.log
+**/*.db
+test/database.yml
+coverage
