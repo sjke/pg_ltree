@@ -303,27 +303,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-  <div class="note notetag">
-    <strong>Note:</strong>
-    <div class='inline'>
-<p>Can&#39;t use aggregate functions (for example: count or sum )</p>
-</div>
-  </div>
-
-
 <p>Get all leaves</p>
-
-<p>SQL EXAMPLE:</p>
-
-<pre class="code ruby"><code class="ruby">SELECT *
-FROM hotel_property_trees
-GROUP BY id
-HAVING
-  (
-    SELECT count(subproperties.path) AS count
-    FROM (SELECT DISTINCT path FROM hotel_property_trees) as subproperties
-    WHERE hotel_property_trees.path @&gt; subproperties.path
-  ) = 1</code></pre>
 
 
   </div>
@@ -355,25 +335,19 @@ HAVING
       <pre class="lines">
 
 
-42
-43
-44
-45
-46
-47
-48
-49</pre>
+29
+30
+31
+32
+33</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/pg_ltree/ltree.rb', line 42</span>
+      <pre class="code"><span class="info file"># File 'lib/pg_ltree/ltree.rb', line 29</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_leaves'>leaves</span> 
-  <span class='id identifier rubyid_subquery'>subquery</span> <span class='op'>=</span> <span class='heredoc_beg'>&lt;&lt;-SQL</span>
-<span class='tstring_content'>    SELECT count(subquery.</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_ltree_path_column'>ltree_path_column</span><span class='embexpr_end'>}</span><span class='tstring_content'>)
-    FROM (</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_select'>select</span><span class='lparen'>(</span><span class='id identifier rubyid_ltree_path_column'>ltree_path_column</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_distinct'>distinct</span><span class='period'>.</span><span class='id identifier rubyid_to_sql'>to_sql</span><span class='embexpr_end'>}</span><span class='tstring_content'>) AS subquery
-    WHERE </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_table_name'>table_name</span><span class='embexpr_end'>}</span><span class='tstring_content'>.</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_ltree_path_column'>ltree_path_column</span><span class='embexpr_end'>}</span><span class='tstring_content'> @&gt; subquery.</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_ltree_path_column'>ltree_path_column</span><span class='embexpr_end'>}</span><span class='tstring_content'>
-</span><span class='heredoc_end'>  SQL
-</span>  <span class='id identifier rubyid_group'>group</span><span class='lparen'>(</span><span class='symbol'>:id</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_having'>having</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>(</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_subquery'>subquery</span><span class='embexpr_end'>}</span><span class='tstring_content'>) = 1</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>def</span> <span class='id identifier rubyid_leaves'>leaves</span>
+  <span class='id identifier rubyid_subquery'>subquery</span> <span class='op'>=</span> <span class='id identifier rubyid_select'>select</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>count(DISTINCT subquery.</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_ltree_path_column'>ltree_path_column</span><span class='embexpr_end'>}</span><span class='tstring_content'>) = 1</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to_sql'>to_sql</span>
+  <span class='id identifier rubyid_subquery'>subquery</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>AS subquery WHERE subquery.</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_ltree_path_column'>ltree_path_column</span><span class='embexpr_end'>}</span><span class='tstring_content'> &lt;@ </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_table_name'>table_name</span><span class='embexpr_end'>}</span><span class='tstring_content'>.</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_ltree_path_column'>ltree_path_column</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_where'>where</span> <span class='id identifier rubyid_subquery'>subquery</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -482,9 +456,9 @@ HAVING
 </div>
 
     <div id="footer">
-  Generated on Fri Aug  7 13:09:17 2015 by
+  Generated on Fri Aug  7 13:59:11 2015 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.7.6 (ruby-2.2.2).
+  0.8.7.6 (ruby-2.1.1).
 </div>
 
   </body>
