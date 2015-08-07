@@ -2,5 +2,6 @@
 *.gem
 **/*.log
 **/*.db
-test/database.yml
+.yardoc
 coverage
+
