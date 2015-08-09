@@ -1,7 +1,14 @@
 # PgLtree
 
-Gem that allows use ltree in ActiveRecord models (Use clean ltree without additional fields).
+**Gem that allows use `ltree` in ActiveRecord models**.
+
 It uses a implementation based around PostgreSQL's [ltree](http://www.postgresql.org/docs/current/static/ltree.html) data type, associated functions and operators.
+
+|               |                                  |
+|---------------|:--------------------------------:|
+| **Author**    | Andrei Panamarenka               |
+| **Version**   | 1.0.0 (Aug 10, 2015)             |
+| **License**   | Released under the MIT license.  |
 
 ## Installation
 
@@ -52,25 +59,7 @@ Run migrations:
   subchild.root # => root
 ```
 
-To navigate an PgLtree model, use the following methods on any instance / record:
-- `.roots`
-- `.leaves`
-- `.at_depth(n)`
-- `#root?`
-- `#depth`
-- `#leaf?`
-- `#root`
-- `#parent`
-- `#leaves`
-- `#self_and_ancestors`
-- `#ancestors`
-- `#self_and_descendents`
-- `#descendents`
-- `#self_and_siblings`
-- `#siblings`
-- `#self_and_children`
-- `#children`
-
 ## TODO
 
-- [ ] Implementing DSL likes as postgres operations and functions
+- [ ] Change node path with/without children nodes
+- [ ] Add validators

@@ -1,37 +1,66 @@
 module PgLtree
+  # Implementatios Postgres ltree for ActiveRecord
+  #
+  # @see [ActiveRecord::Base]
+  # @see http://www.postgresql.org/docs/current/static/ltree.html
+  #
+  # @author a.ponomarenko
   module Ltree
+
+    # Initialzie ltree for active model
+    #
+    # @param column [String] ltree column name
     def ltree(column = :path)
       cattr_accessor :ltree_path_column
 
       self.ltree_path_column = column
 
+      has_and_belongs_to_many column.to_s.tableize.to_sym,
+            class_name: self.class.name,
+            association_foreign_key: 'path'
+
+      extend ClassMethods
       include InstanceMethods
     end
 
-    # Get roots
-    # 
-    # @return [ActiveRecord::Relation] relations of node's roots
-    def roots
-      at_depth 1
+    # Define class methods
+    module ClassMethods
+      # Get roots
+      #
+      # @return [ActiveRecord::Relation] relations of node's roots
+      def roots
+        at_depth 1
+      end
+
+      # Get nodes on the level
+      #
+      # @param depth [Integer] Depth of the nodes
+      # @return [ActiveRecord::Relation] relations of nodes for the depth
+      def at_depth(depth)
+        where "NLEVEL(#{ltree_path_column}) = ?", depth
+      end
+
+      # Get all leaves
+      #
+      # @return [ActiveRecord::Relation] relations of node's leaves
+      def leaves
+        subquery =
+          select("COUNT(subquery.#{ltree_path_column}) = 1")
+          .from("#{table_name} AS subquery")
+          .where("subquery.#{ltree_path_column} <@ #{table_name}.#{ltree_path_column}").to_sql
+        where subquery
+      end
+
+      # Get all with nodes when path liked the lquery
+      #
+      # @param lquery [String] ltree query
+      # @return [ActiveRecord::Relation] relations of node'
+      def where_path_liked(lquery)
+        where "#{ltree_path_column} ~ ?", lquery
+      end
     end
 
-    # Get nodes on the level
-    #
-    # @param depth [Integer] Depth of the nodes
-    # @return [ActiveRecord::Relation] relations of nodes for the depth
-    def at_depth(depth)
-      where "NLEVEL(#{ltree_path_column}) = ?", depth
-    end
-
-    # Get all leaves
-    #
-    # @return [ActiveRecord::Relation] relations of node's leaves
-    def leaves
-      subquery = select("count(DISTINCT subquery.#{ltree_path_column}) = 1").to_sql
-      subquery << "AS subquery WHERE subquery.#{ltree_path_column} <@ #{table_name}.#{ltree_path_column}"
-      where subquery
-    end
-  
+    # Define instance methods
     module InstanceMethods
 
       # Get default scope of ltree
@@ -52,7 +81,7 @@ module PgLtree
       #
       # @return [String] ltree current value
       def ltree_path
-        public_send ltree_path_column 
+        public_send ltree_path_column
       end
 
       # Get lTree previous value
@@ -66,7 +95,7 @@ module PgLtree
       #
       # @return [Boolean] True - for root node, False - for childen node
       def root?
-        nlevel == 1
+        depth == 1
       end
 
       # Get node depth
@@ -74,13 +103,6 @@ module PgLtree
       # @return [Integer] node depth
       def depth
         ltree_scope.distinct.pluck("NLEVEL('#{ltree_path}')").first || nil
-      end
-      
-      # Check what current node have leaves
-      #
-      # @return [Boolean] True - if node have leaves, False - if node doesn't have leaves
-      def leaf?
-        ltree_scope.where("#{ltree_path_column} <@ ?", ltree_path).count != 1
       end
 
       # Get root of the node
@@ -101,7 +123,14 @@ module PgLtree
       #
       # @return [ActiveRecord::Relation]
       def leaves
-        ltree_scope.leaves.where "path <@ ?", ltree_path
+        ltree_scope.leaves.where("#{ltree_path_column} <@ ?", ltree_path).where.not ltree_path_column => ltree_path
+      end
+
+      # Check what current node have leaves
+      #
+      # @return [Boolean] True - if node have leaves, False - if node doesn't have leaves
+      def leaf?
+        leaves.count == 0
       end
 
       # Get self and ancestors
@@ -147,13 +176,6 @@ module PgLtree
       # @return [ActiveRecord::Relation]
       def siblings
         self_and_siblings.where.not ltree_path_column => ltree_path
-      end
-
-      # Get self and children
-      #
-      # @return [Array]
-      def self_and_children
-        [self + children]
       end
 
       # Get children

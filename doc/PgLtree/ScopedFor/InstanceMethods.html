@@ -84,7 +84,18 @@
 </dl>
 <div class="clear"></div>
 
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    
+<p>Define instance methods</p>
 
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
 
 
 
@@ -102,7 +113,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#scope-instance_method" title="#scope (instance method)">- (Object) <strong>scope</strong> </a>
+      <a href="#ltree_scope-instance_method" title="#ltree_scope (instance method)">- (Object) <strong>ltree_scope</strong> </a>
     
 
     
@@ -116,7 +127,9 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>Get default scope of ltree.</p>
+</div></span>
   
 </li>
 
@@ -131,28 +144,57 @@
 
     
       <div class="method_details first">
-  <h3 class="signature first" id="scope-instance_method">
+  <h3 class="signature first" id="ltree_scope-instance_method">
   
-    - (<tt>Object</tt>) <strong>scope</strong> 
-  
-
+    - (<tt>Object</tt>) <strong>ltree_scope</strong> 
   
 
   
-</h3><table class="source_code">
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Get default scope of ltree</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'></span>
+      
+      
+      
+        
+        <div class='inline'>
+<p>current class</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-12
-13
-14</pre>
+25
+26
+27</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/pg_ltree/scoped_for.rb', line 12</span>
+      <pre class="code"><span class="info file"># File 'lib/pg_ltree/scoped_for.rb', line 25</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_scope'>scope</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_ltree_scope'>ltree_scope</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_where'>where</span> <span class='op'>*</span><span class='lparen'>(</span><span class='id identifier rubyid_ltree_scoped_for'>ltree_scoped_for</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_column'>column</span><span class='op'>|</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_column'>column</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_public_send'>public_send</span><span class='lparen'>(</span><span class='id identifier rubyid_column'>column</span><span class='rparen'>)</span> <span class='rbrace'>}</span> <span class='rbrace'>}</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -165,9 +207,9 @@
 </div>
 
     <div id="footer">
-  Generated on Fri Aug  7 13:59:11 2015 by
+  Generated on Sun Aug  9 14:34:43 2015 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.7.6 (ruby-2.1.1).
+  0.8.7.6 (ruby-2.2.0).
 </div>
 
   </body>
