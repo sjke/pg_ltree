@@ -10,6 +10,14 @@ It uses a implementation based around PostgreSQL's [ltree](http://www.postgresql
 | **Version**   | 1.0.0 (Aug 10, 2015)             |
 | **License**   | Released under the MIT license.  |
 
+
+##
+
+[![Code Climate](https://codeclimate.com/github/sjke/pg_ltree/badges/gpa.svg)](https://codeclimate.com/github/sjke/pg_ltree)
+[![RubyDoc](http://inch-ci.org/github/sjke/pg_ltree.svg?branch=master)](http://www.rubydoc.info/github/sjke/pg_ltree/)
+[![security](https://hakiri.io/github/sjke/pg_ltree/master.svg)](https://hakiri.io/github/sjke/pg_ltree/master)
+
+
 ## Installation
 
 Add this line to your application's Gemfile:
