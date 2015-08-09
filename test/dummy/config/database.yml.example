@@ -2,12 +2,13 @@ default: &default
   adapter:  postgresql
   host:     localhost
   username: postgres
-  password: postgres
   min_messages: warning
 
 development:
   <<: *default
   database: pg_ltree_development
+  password: postgres
+
 test:
   <<: *default
   database: pg_ltree_test

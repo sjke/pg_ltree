@@ -1,0 +1,11 @@
+rvm:
+  - 2.0.0
+  - 2.1.0
+  - 2.2.0
+
+services:
+  - postgresql
+
+before_script:
+  - cp test/dummy/config/database.yml.example test/dummy/config/database.yml
+  - psql -c 'create database pg_ltree_test;' -U postgres
