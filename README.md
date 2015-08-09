@@ -1,12 +1,14 @@
 # PgLtree
 
-**Gem that allows use `ltree` in ActiveRecord models**
+**Gem that allows use `ltree` in ActiveRecord models**.
+
 It uses a implementation based around PostgreSQL's [ltree](http://www.postgresql.org/docs/current/static/ltree.html) data type, associated functions and operators.
 
-|:------------|:--------------------------------|
-| **Author**  | Andrei Panamarenka              |
-| **Version** | 1.0.0 (Aug 10, 2015)            |
-| **License** | Released under the MIT license. |
+|               |                                  |
+|---------------|:--------------------------------:|
+| **Author**    | Andrei Panamarenka               |
+| **Version**   | 1.0.0 (Aug 10, 2015)             |
+| **License**   | Released under the MIT license.  |
 
 ## Installation
 
