@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    pg_ltree (0.0.3)
+    pg_ltree (1.0.0)
       pg
       rails (>= 4.0.0)
 
