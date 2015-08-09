@@ -69,6 +69,11 @@ Run migrations:
   subchild.root # => root
 ```
 
+For find a lots of additional information about PgLtee see:
+* [Wiki](https://github.com/sjke/pg_ltree/wiki)
+* [List of methods for work with LTree](https://github.com/sjke/pg_ltree/wiki/List-of-methods-for-work-with-LTree)
+* [Module SCOPE FOR (For not uniq path in tree)](https://github.com/sjke/pg_ltree/wiki/Module-SCOPED-FOR)
+
 ## TODO
 
 - [ ] Change node path with/without children nodes
