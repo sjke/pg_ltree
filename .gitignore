@@ -1,7 +1,7 @@
 .DS_Store
 *.gem
+.bundle
 **/*.log
 **/*.db
 .yardoc
 coverage
-

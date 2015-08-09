@@ -1,3 +1,8 @@
+# Organise ActiveRecord model into a tree structure with PostgreSQL LTree
+#
+# @author a.ponomarenko
 module PgLtree
-  VERSION = "0.0.1"
+
+  # Gem Version
+  VERSION = "0.0.3"
 end
