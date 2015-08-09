@@ -13,6 +13,8 @@ gemspec
 # To use a debugger
 # gem 'byebug', group: [:development, :test]
 
+gem 'coveralls', require: false
+
 group :doc do
   gem "yard"
 end
