@@ -7,7 +7,7 @@ It uses a implementation based around PostgreSQL's [ltree](http://www.postgresql
 |               |                                  |
 |---------------|:--------------------------------:|
 | **Author**    | Andrei Panamarenka               |
-| **Version**   | 1.0.0 (Aug 10, 2015)             |
+| **Version**   | 1.1.0 (Sep 1, 2015)             |
 | **License**   | Released under the MIT license.  |
 
 
@@ -32,8 +32,24 @@ And then execute:
 
 Add ltree extension to PostgreSQL:
 
-    $ psql -U postgres -d example_db
-    -> CREATE EXTENSION IF NOT EXISTS ltree;
+``` ruby
+class AddLtreeExtension < ActiveRecord::Migration
+  def change
+    reversible do |dir|
+      dir.up do
+        execute <<-SQL
+          CREATE EXTENSION IF NOT EXISTS ltree;
+        SQL
+      end
+      dir.down do
+        execute <<-SQL
+          DROP EXTENSION IF NOT EXISTS ltree;
+        SQL
+      end
+    end
+  end
+end
+```
 
 Update your model:
 
@@ -56,6 +72,7 @@ Run migrations:
 ``` ruby
   class AnyModel < ActiveRecord::Base
     ltree :path
+    # ltree :path, cascade: false # Disable cascade update and delete
   end
 
   root     = AnyModel.create!(path: 'Top')
@@ -74,7 +91,3 @@ For find a lots of additional information about PgLtee see:
 * [List of methods for work with LTree](https://github.com/sjke/pg_ltree/wiki/List-of-methods-for-work-with-LTree)
 * [Module SCOPE FOR (For not uniq path in tree)](https://github.com/sjke/pg_ltree/wiki/Module-SCOPED-FOR)
 
-## TODO
-
-- [ ] Change node path with/without children nodes
-- [ ] Add validators
