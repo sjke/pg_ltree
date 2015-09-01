@@ -7,7 +7,7 @@ It uses a implementation based around PostgreSQL's [ltree](http://www.postgresql
 |               |                                  |
 |---------------|:--------------------------------:|
 | **Author**    | Andrei Panamarenka               |
-| **Version**   | 1.0.0 (Aug 10, 2015)             |
+| **Version**   | 1.1.0 (Sep 1, 2015)             |
 | **License**   | Released under the MIT license.  |
 
 
@@ -16,7 +16,6 @@ It uses a implementation based around PostgreSQL's [ltree](http://www.postgresql
 [![Gem Version](https://badge.fury.io/rb/pg_ltree.svg)](http://badge.fury.io/rb/pg_ltree)
 [![Build Status](https://travis-ci.org/sjke/pg_ltree.svg?branch=travis-ci)](https://travis-ci.org/sjke/pg_ltree)
 [![Code Climate](https://codeclimate.com/github/sjke/pg_ltree/badges/gpa.svg)](https://codeclimate.com/github/sjke/pg_ltree)
-[![Coverage Status](https://coveralls.io/repos/sjke/pg_ltree/badge.svg?branch=travis-ci&service=github)](https://coveralls.io/github/sjke/pg_ltree?branch=travis-ci)
 [![RubyDoc](http://inch-ci.org/github/sjke/pg_ltree.svg?branch=master)](http://www.rubydoc.info/github/sjke/pg_ltree/)
 [![security](https://hakiri.io/github/sjke/pg_ltree/master.svg)](https://hakiri.io/github/sjke/pg_ltree/master)
 
@@ -32,8 +31,24 @@ And then execute:
 
 Add ltree extension to PostgreSQL:
 
-    $ psql -U postgres -d example_db
-    -> CREATE EXTENSION IF NOT EXISTS ltree;
+``` ruby
+class AddLtreeExtension < ActiveRecord::Migration
+  def change
+    reversible do |dir|
+      dir.up do
+        execute <<-SQL
+          CREATE EXTENSION IF NOT EXISTS ltree;
+        SQL
+      end
+      dir.down do
+        execute <<-SQL
+          DROP EXTENSION IF NOT EXISTS ltree;
+        SQL
+      end
+    end
+  end
+end
+```
 
 Update your model:
 
@@ -56,6 +71,7 @@ Run migrations:
 ``` ruby
   class AnyModel < ActiveRecord::Base
     ltree :path
+    # ltree :path, cascade: false # Disable cascade update and delete
   end
 
   root     = AnyModel.create!(path: 'Top')
@@ -74,7 +90,3 @@ For find a lots of additional information about PgLtee see:
 * [List of methods for work with LTree](https://github.com/sjke/pg_ltree/wiki/List-of-methods-for-work-with-LTree)
 * [Module SCOPE FOR (For not uniq path in tree)](https://github.com/sjke/pg_ltree/wiki/Module-SCOPED-FOR)
 
-## TODO
-
-- [ ] Change node path with/without children nodes
-- [ ] Add validators

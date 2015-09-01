@@ -10,14 +10,15 @@ module PgLtree
     # Initialzie ltree for active model
     #
     # @param column [String] ltree column name
-    def ltree(column = :path)
+    def ltree(column = :path, options: { cascade: true })
       cattr_accessor :ltree_path_column
 
       self.ltree_path_column = column
 
-      has_and_belongs_to_many column.to_s.tableize.to_sym,
-            class_name: self.class.name,
-            association_foreign_key: 'path'
+      if options[:cascade]
+        self.after_update :cascade_update
+        self.after_destroy :cascade_destroy
+      end
 
       extend ClassMethods
       include InstanceMethods
@@ -184,6 +185,21 @@ module PgLtree
       def children
         ltree_scope.where "? @> #{ltree_path_column} AND nlevel(#{ltree_path_column}) = NLEVEL(?) + 1",
           ltree_path, ltree_path
+      end
+
+      # Update all childen for current path
+      #
+      # @return [ActiveRecord::Relation]
+      def cascade_update
+        ltree_scope.where(["#{ltree_path_column} <@ ?", ltree_path_was]).
+        update_all ["#{ltree_path_column} = ? || subpath(#{ltree_path_column}, nlevel(?))", ltree_path, ltree_path_was]
+      end
+
+      # Delete all children for current path
+      #
+      # @return [ActiveRecord::Relation]
+      def cascade_destroy
+        ltree_scope.where("#{ltree_path_column} <@ ?", ltree_path_was).delete_all
       end
     end
   end

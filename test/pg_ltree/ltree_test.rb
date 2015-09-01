@@ -151,4 +151,20 @@ class PgLtree::LtreeTest < ActiveSupport::TestCase
       Top.Hobbies.Amateurs_Astronomy
     )
   end
+
+  test '.cascade_update' do
+    node = TreeNode.find_by(path: 'Top.Hobbies')
+    node.update path: 'Top.WoW'
+
+    assert_equal node.self_and_descendents.pluck(:path), %w(
+      Top.WoW
+      Top.WoW.Amateurs_Astronomy
+    )
+  end
+  
+  test '.cascade_destroy' do
+    TreeNode.find_by(path: 'Top.Collections').destroy
+
+    assert_equal TreeNode.where("path ~ 'Top.Collections'").pluck(:path), %w()
+  end
 end

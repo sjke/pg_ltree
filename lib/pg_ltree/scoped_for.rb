@@ -19,6 +19,7 @@ module PgLtree
 
     # Define class methods
     module ClassMethods
+
       # Get all leaves
       #
       # @return [ActiveRecord::Relation] relations of node's leaves
