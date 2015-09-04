@@ -7,7 +7,7 @@ It uses a implementation based around PostgreSQL's [ltree](http://www.postgresql
 |               |                                  |
 |---------------|:--------------------------------:|
 | **Author**    | Andrei Panamarenka               |
-| **Version**   | 1.1.0 (Sep 1, 2015)             |
+| **Version**   | 1.1.1 (Sep 4, 2015)              |
 | **License**   | Released under the MIT license.  |
 
 
