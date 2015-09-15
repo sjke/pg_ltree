@@ -1,8 +1,12 @@
+## 1.1.2
+
+* [FIXED] Fix original #leaves method when merging with previous conditions was invalid. Overrided method in ScopedFor is useless now and it was deleted.
+
 ## 1.1.1
 
-* fix `#cascade_update` method
+* [FIXED] `#cascade_update` method
 
 ## 1.1.0
 
-* Added cascade update/destroy (Enabled by default)
-* Fix destroy object
+* [ADDED] cascade update/destroy (Enabled by default)
+* [FIXED] destroy object

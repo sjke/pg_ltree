@@ -13,23 +13,7 @@ module PgLtree
 
       self.ltree_scoped_for = Array.wrap(columns)
 
-      extend ClassMethods
       include InstanceMethods
-    end
-
-    # Define class methods
-    module ClassMethods
-
-      # Get all leaves
-      #
-      # @return [ActiveRecord::Relation] relations of node's leaves
-      def leaves
-        subquery =
-          select("COUNT(subquery.#{ltree_path_column}) = (SELECT COUNT(DISTINCT #{ltree_scoped_for.first}) FROM #{table_name})")
-          .from("#{table_name} AS subquery")
-          .where("subquery.#{ltree_path_column} <@ #{table_name}.#{ltree_path_column}").to_sql
-        where subquery
-      end
     end
 
     # Define instance methods
