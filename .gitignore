@@ -7,3 +7,4 @@ doc
 .yardoc
 coverage
 database.yml
+*.lock
