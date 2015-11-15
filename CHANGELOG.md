@@ -1,3 +1,7 @@
+## master
+
+* [ADDED] node instance `height` method
+
 ## 1.1.2
 
 * [FIXED] Fix original #leaves method when merging with previous conditions was invalid. Overrided method in ScopedFor is useless now and it was deleted.
