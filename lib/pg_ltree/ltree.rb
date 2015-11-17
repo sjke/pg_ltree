@@ -100,6 +100,18 @@ module PgLtree
         depth == 1
       end
 
+      # Get node height
+      #
+      # The height of a node is the number of edges
+      # on the longest downward path between that node and a leaf. The leaf nodes have height zero,
+      # and a tree with only a single node (hence both a root and leaf) has height zero.
+      # Conventionally, an empty tree (tree with no nodes, if such are allowed) has depth and height −1
+      #
+      # @return [Number] height of the given node. Height of the tree for root node.
+      def height
+        self_and_descendents.maximum("NLEVEL(#{ltree_path_column})") - depth.to_i
+      end
+
       # Get node depth
       #
       # @return [Integer] node depth

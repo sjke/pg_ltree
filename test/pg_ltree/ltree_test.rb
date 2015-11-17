@@ -69,6 +69,11 @@ class PgLtree::LtreeTest < ActiveSupport::TestCase
     assert_not TreeNode.find_by(path: 'Top.Science').root?
   end
 
+  test '.height' do
+    assert_equal 4, TreeNode.find_by(path: 'Top').height
+    assert_equal 0, TreeNode.find_by(path: 'Top.Science.Astronomy.Astrophysics').height
+  end
+
   test '.depth' do
     assert_equal TreeNode.find_by(path: 'Top.Hobbies.Amateurs_Astronomy').depth, 3
   end
