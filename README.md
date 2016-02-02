@@ -34,18 +34,7 @@ Add ltree extension to PostgreSQL:
 ``` ruby
 class AddLtreeExtension < ActiveRecord::Migration
   def change
-    reversible do |dir|
-      dir.up do
-        execute <<-SQL
-          CREATE EXTENSION IF NOT EXISTS ltree;
-        SQL
-      end
-      dir.down do
-        execute <<-SQL
-          DROP EXTENSION IF NOT EXISTS ltree;
-        SQL
-      end
-    end
+    enable_extension 'ltree'
   end
 end
 ```
