@@ -78,6 +78,15 @@ class PgLtree::LtreeTest < ActiveSupport::TestCase
     assert_equal TreeNode.find_by(path: 'Top.Hobbies.Amateurs_Astronomy').depth, 3
   end
 
+  test '.depth on new record' do
+    assert_equal TreeNode.new(path: 'Top.Hobbies.Amateurs_Astronomy').depth, 3
+  end
+
+  test '.depth on new record when database is empty' do
+    TreeNode.delete_all
+    assert_equal TreeNode.new(path: 'Top.Hobbies.Amateurs_Astronomy').depth, 3
+  end
+
   test '.root' do
     assert_equal TreeNode.find_by(path: 'Top.Hobbies.Amateurs_Astronomy').root.path, 'Top'
   end
@@ -166,7 +175,7 @@ class PgLtree::LtreeTest < ActiveSupport::TestCase
       Top.WoW.Amateurs_Astronomy
     )
   end
-  
+
   test '.cascade_destroy' do
     TreeNode.find_by(path: 'Top.Collections').destroy
 
