@@ -115,8 +115,8 @@ class PgLtree::ScopedForTest < ActiveSupport::TestCase
     )
   end
 
-  test '.self_and_descendents' do
-    assert_equal not_uniq_tree_node_find_by_path('Top.Science').self_and_descendents.pluck(:new_path), %w(
+  test '.self_and_descendants' do
+    assert_equal not_uniq_tree_node_find_by_path('Top.Science').self_and_descendants.pluck(:new_path), %w(
       Top.Science
       Top.Science.Astronomy
       Top.Science.Astronomy.Astrophysics
@@ -124,8 +124,8 @@ class PgLtree::ScopedForTest < ActiveSupport::TestCase
     )
   end
 
-  test '.descendents' do
-    assert_equal not_uniq_tree_node_find_by_path('Top.Science').descendents.pluck(:new_path), %w(
+  test '.descendants' do
+    assert_equal not_uniq_tree_node_find_by_path('Top.Science').descendants.pluck(:new_path), %w(
       Top.Science.Astronomy
       Top.Science.Astronomy.Astrophysics
       Top.Science.Astronomy.Cosmology
@@ -153,12 +153,12 @@ class PgLtree::ScopedForTest < ActiveSupport::TestCase
       Top.Hobbies.Amateurs_Astronomy
     )
   end
-  
+
   test '.cascade_update' do
     node = NotUniqTreeNode.find_by(new_path: 'Top.Hobbies', status: :active)
     node.update new_path: 'Top.WoW'
 
-    assert_equal node.self_and_descendents.pluck(:new_path), %w(
+    assert_equal node.self_and_descendants.pluck(:new_path), %w(
       Top.WoW
       Top.WoW.Amateurs_Astronomy
     )

@@ -118,8 +118,8 @@ class PgLtree::LtreeTest < ActiveSupport::TestCase
     )
   end
 
-  test '.self_and_descendents' do
-    assert_equal TreeNode.find_by(path: 'Top.Science').self_and_descendents.pluck(:path), %w(
+  test '.self_and_descendants' do
+    assert_equal TreeNode.find_by(path: 'Top.Science').self_and_descendants.pluck(:path), %w(
       Top.Science
       Top.Science.Astronomy
       Top.Science.Astronomy.Astrophysics
@@ -127,8 +127,8 @@ class PgLtree::LtreeTest < ActiveSupport::TestCase
     )
   end
 
-  test '.descendents' do
-    assert_equal TreeNode.find_by(path: 'Top.Science').descendents.pluck(:path), %w(
+  test '.descendants' do
+    assert_equal TreeNode.find_by(path: 'Top.Science').descendants.pluck(:path), %w(
       Top.Science.Astronomy
       Top.Science.Astronomy.Astrophysics
       Top.Science.Astronomy.Cosmology
@@ -161,12 +161,12 @@ class PgLtree::LtreeTest < ActiveSupport::TestCase
     node = TreeNode.find_by(path: 'Top.Hobbies')
     node.update path: 'Top.WoW'
 
-    assert_equal node.self_and_descendents.pluck(:path), %w(
+    assert_equal node.self_and_descendants.pluck(:path), %w(
       Top.WoW
       Top.WoW.Amateurs_Astronomy
     )
   end
-  
+
   test '.cascade_destroy' do
     TreeNode.find_by(path: 'Top.Collections').destroy
 

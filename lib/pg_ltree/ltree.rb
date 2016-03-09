@@ -109,7 +109,7 @@ module PgLtree
       #
       # @return [Number] height of the given node. Height of the tree for root node.
       def height
-        self_and_descendents.maximum("NLEVEL(#{ltree_path_column})") - depth.to_i
+        self_and_descendants.maximum("NLEVEL(#{ltree_path_column})") - depth.to_i
       end
 
       # Get node depth
@@ -161,18 +161,34 @@ module PgLtree
         self_and_ancestors.where.not ltree_path_column => ltree_path
       end
 
-      # Get self and descendents
+      # Get self and descendants
       #
       # @return [ActiveRecord::Relation]
-      def self_and_descendents
+      def self_and_descendants
         ltree_scope.where("#{ltree_path_column} <@ ?", ltree_path)
       end
 
-      # Get descendents
+      # Get self and descendants
+      # @deprecated Please use {#self_and_descendants} instead
+      # @return [ActiveRecord::Relation]
+      def self_and_descendents
+        warn '[DEPRECATION] `self_and_descendents` is deprecated. Please use `self_and_descendants` instead.'
+        self_and_descendants
+      end
+
+      # Get descendants
       #
       # @return [ActiveRecord::Relation]
+      def descendants
+        self_and_descendants.where.not ltree_path_column => ltree_path
+      end
+
+      # Get descendants
+      # @deprecated Please use {#descendants} instead
+      # @return [ActiveRecord::Relation]
       def descendents
-        self_and_descendents.where.not ltree_path_column => ltree_path
+        warn '[DEPRECATION] `descendents` is deprecated. Please use `descendants` instead.'
+        descendants
       end
 
       # Get self and siblings
