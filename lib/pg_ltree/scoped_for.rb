@@ -4,7 +4,6 @@ module PgLtree
   #
   # @author a.ponomarenko
   module ScopedFor
-
     # Define base instance scope for model by columns
     #
     # @param columns [Array] List of scoped fields
@@ -18,7 +17,6 @@ module PgLtree
 
     # Define instance methods
     module InstanceMethods
-
       # Get default scope of ltree
       #
       # @return current class

@@ -7,7 +7,7 @@ It uses a implementation based around PostgreSQL's [ltree](http://www.postgresql
 |               |                                  |
 |---------------|:--------------------------------:|
 | **Author**    | Andrei Panamarenka               |
-| **Version**   | 1.1.2 (Sep 15, 2015)             |
+| **Version**   | 1.1.3 (March 10, 2016)           |
 | **License**   | Released under the MIT license.  |
 
 
@@ -17,13 +17,11 @@ It uses a implementation based around PostgreSQL's [ltree](http://www.postgresql
 [![Build Status](https://travis-ci.org/sjke/pg_ltree.svg?branch=travis-ci)](https://travis-ci.org/sjke/pg_ltree)
 [![Code Climate](https://codeclimate.com/github/sjke/pg_ltree/badges/gpa.svg)](https://codeclimate.com/github/sjke/pg_ltree)
 [![RubyDoc](http://inch-ci.org/github/sjke/pg_ltree.svg?branch=master)](http://www.rubydoc.info/github/sjke/pg_ltree/)
-[![security](https://hakiri.io/github/sjke/pg_ltree/master.svg)](https://hakiri.io/github/sjke/pg_ltree/master)
-
 ## Installation
 
 Add this line to your application's Gemfile:
 
-    gem 'pg_ltree'
+    gem 'pg_ltree', '1.1.3'
 
 And then execute:
 
@@ -78,4 +76,3 @@ For find a lots of additional information about PgLtee see:
 * [Wiki](https://github.com/sjke/pg_ltree/wiki)
 * [List of methods for work with LTree](https://github.com/sjke/pg_ltree/wiki/List-of-methods-for-work-with-LTree)
 * [Module SCOPE FOR (For not uniq path in tree)](https://github.com/sjke/pg_ltree/wiki/Module-SCOPED-FOR)
-
