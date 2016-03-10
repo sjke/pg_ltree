@@ -14,5 +14,5 @@ gemspec
 # gem 'byebug', group: [:development, :test]
 
 group :doc do
-  gem "yard"
+  gem 'yard'
 end

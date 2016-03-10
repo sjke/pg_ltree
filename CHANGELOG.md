@@ -1,6 +1,8 @@
-## master
+## 1.1.3
 
-* [ADDED] node instance `height` method
+* [ADDED] node instance `height` method ([#6](https://github.com/sjke/pg_ltree/pull/6) by [@caulfield](https://github.com/caulfield))
+* [FIXED] Fix #depth for a new record ([#9](https://github.com/sjke/pg_ltree/pull/9) by [@arjan0307](https://github.com/arjan0307))
+* [IMPROVE] Use 'descendants' instead of 'descendents' ([#8](https://github.com/sjke/pg_ltree/pull/8) by [@CUnknown](https://github.com/CUnknown))
 
 ## 1.1.2
 

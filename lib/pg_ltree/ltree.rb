@@ -6,7 +6,6 @@ module PgLtree
   #
   # @author a.ponomarenko
   module Ltree
-
     # Initialzie ltree for active model
     #
     # @param column [String] ltree column name
@@ -16,8 +15,8 @@ module PgLtree
       self.ltree_path_column = column
 
       if options[:cascade]
-        self.after_update :cascade_update
-        self.after_destroy :cascade_destroy
+        after_update :cascade_update
+        after_destroy :cascade_destroy
       end
 
       extend ClassMethods
@@ -47,8 +46,8 @@ module PgLtree
       def leaves
         subquery =
           unscoped.select("COUNT(subquery.#{ltree_path_column}) = 1")
-          .from("#{table_name} AS subquery")
-          .where("subquery.#{ltree_path_column} <@ #{table_name}.#{ltree_path_column}")
+                  .from("#{table_name} AS subquery")
+                  .where("subquery.#{ltree_path_column} <@ #{table_name}.#{ltree_path_column}")
         subquery = subquery.where(subquery: current_scope.where_values_hash) if current_scope
         where subquery.to_sql
       end
@@ -64,7 +63,6 @@ module PgLtree
 
     # Define instance methods
     module InstanceMethods
-
       # Get default scope of ltree
       #
       # @return current class
@@ -213,15 +211,15 @@ module PgLtree
       # @return [ActiveRecord::Relation]
       def children
         ltree_scope.where "? @> #{ltree_path_column} AND nlevel(#{ltree_path_column}) = NLEVEL(?) + 1",
-          ltree_path, ltree_path
+                          ltree_path, ltree_path
       end
 
       # Update all childen for current path
       #
       # @return [ActiveRecord::Relation]
       def cascade_update
-        ltree_scope.where(["#{ltree_path_column} <@ ?", ltree_path_was]).where(["#{ltree_path_column} != ?", ltree_path]).
-        update_all ["#{ltree_path_column} = ? || subpath(#{ltree_path_column}, nlevel(?))", ltree_path, ltree_path_was]
+        ltree_scope.where(["#{ltree_path_column} <@ ?", ltree_path_was]).where(["#{ltree_path_column} != ?", ltree_path])
+                   .update_all ["#{ltree_path_column} = ? || subpath(#{ltree_path_column}, nlevel(?))", ltree_path, ltree_path_was]
       end
 
       # Delete all children for current path
