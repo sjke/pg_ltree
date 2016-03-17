@@ -1,8 +1,8 @@
 require 'test_helper'
 
-class PgLtree::LtreeTest < ActiveSupport::TestCase
-
+class PgLtree::LtreeTest < BaseTest
   def setup
+    super
     %w(
       Top
       Top.Science
@@ -22,15 +22,11 @@ class PgLtree::LtreeTest < ActiveSupport::TestCase
     end
   end
 
-  def teardown
-    TreeNode.delete_all
-  end
-
-  test "Default configuration" do
+  test 'Default configuration' do
     assert_equal TreeNode.ltree_path_column, :path
   end
 
-  test "Custom configuration" do
+  test 'Custom configuration' do
     assert_equal NotUniqTreeNode.ltree_path_column, :new_path
   end
 
@@ -93,7 +89,7 @@ class PgLtree::LtreeTest < ActiveSupport::TestCase
 
   test '.parent' do
     assert_equal TreeNode.find_by(path: 'Top.Collections.Pictures.Astronomy.Astronauts').parent.path,
-      'Top.Collections.Pictures.Astronomy'
+                 'Top.Collections.Pictures.Astronomy'
   end
 
   test '.leaves' do
@@ -151,7 +147,6 @@ class PgLtree::LtreeTest < ActiveSupport::TestCase
       Top.Collections.Pictures.Astronomy.Astronauts
     )
   end
-
 
   test '.siblings' do
     assert_equal TreeNode.find_by(path: 'Top.Collections.Pictures.Astronomy.Stars').siblings.pluck(:path), %w(

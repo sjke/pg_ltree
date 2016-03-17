@@ -114,7 +114,7 @@ module PgLtree
       #
       # @return [Integer] node depth
       def depth
-        ActiveRecord::Base.connection.select_all("SELECT NLEVEL('#{ltree_path}')").cast_values.first
+        ActiveRecord::Base.connection.select_all("SELECT NLEVEL('#{ltree_path}')").rows.flatten.first.to_i
       end
 
       # Get root of the node
