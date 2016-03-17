@@ -1,7 +1,8 @@
 require 'test_helper'
 
-class PgLtree::ScopedForTest < ActiveSupport::TestCase
+class PgLtree::ScopedForTest < BaseTest
   def setup
+    super
     %w(
       Top
       Top.Science
@@ -23,12 +24,8 @@ class PgLtree::ScopedForTest < ActiveSupport::TestCase
     end
   end
 
-  def teardown
-    NotUniqTreeNode.delete_all
-  end
-
   test '#roots' do
-    assert_equal NotUniqTreeNode.roots.pluck(:new_path), ['Top', 'Top']
+    assert_equal NotUniqTreeNode.roots.pluck(:new_path), %w(Top Top)
   end
 
   test '#at_depth' do
@@ -81,7 +78,7 @@ class PgLtree::ScopedForTest < ActiveSupport::TestCase
 
   test '.parent' do
     assert_equal not_uniq_tree_node_find_by_path('Top.Collections.Pictures.Astronomy.Astronauts').parent.new_path,
-      'Top.Collections.Pictures.Astronomy'
+                 'Top.Collections.Pictures.Astronomy'
   end
 
   test '.leaves' do
@@ -139,7 +136,6 @@ class PgLtree::ScopedForTest < ActiveSupport::TestCase
       Top.Collections.Pictures.Astronomy.Astronauts
     )
   end
-
 
   test '.siblings' do
     assert_equal not_uniq_tree_node_find_by_path('Top.Collections.Pictures.Astronomy.Stars').siblings.pluck(:new_path), %w(
