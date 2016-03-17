@@ -19,7 +19,7 @@ services:
   - postgresql
 
 before_script:
-  - cp test/dummy/config/database.yml.example test/dummy/config/database.yml
+  - cp test/database.yml.example test/database.yml
   - psql -c 'create database pg_ltree_test;' -U postgres
 
 matrix:
