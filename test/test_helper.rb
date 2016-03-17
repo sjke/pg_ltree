@@ -27,7 +27,7 @@ class BaseTest < ActiveSupport::TestCase
       db_connection = YAML.load_file(File.expand_path('../database.yml', __FILE__))
     rescue => e
       $stderr.puts e.message
-      $stderr.puts 'Copy `database.yml.sample` to `database.yml` and configure connection to DB'
+      $stderr.puts 'Copy `test/database.yml.sample` to `test/database.yml` and configure connection to DB'
       exit 0
     end
 
