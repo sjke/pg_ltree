@@ -21,9 +21,9 @@ Gem::Specification.new do |s|
   s.add_dependency 'activerecord', '>= 4.0.0', '< 5.1'
   s.add_dependency 'pg', '>= 0.17.0', '< 0.19'
 
-  s.add_development_dependency 'bundler', '~> 1.7.6'
+  s.add_development_dependency 'bundler'
   s.add_development_dependency 'rake'
   s.add_development_dependency 'pry'
   s.add_development_dependency 'yard'
-  s.add_development_dependency 'minitest', '>= 4.0', '< 6.0'
+  s.add_development_dependency 'minitest'
 end
