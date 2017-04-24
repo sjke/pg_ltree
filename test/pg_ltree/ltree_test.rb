@@ -60,6 +60,15 @@ class PgLtree::LtreeTest < BaseTest
     )
   end
 
+  test '#where_path_matches_ltxtquery' do
+    assert_equal TreeNode.where_path_matches_ltxtquery('Astro*% & !pictures@').pluck(:path), %w(
+      Top.Science.Astronomy
+      Top.Science.Astronomy.Astrophysics
+      Top.Science.Astronomy.Cosmology
+      Top.Hobbies.Amateurs_Astronomy
+    )
+  end
+
   test '.root?' do
     assert TreeNode.find_by(path: 'Top').root?
     assert_not TreeNode.find_by(path: 'Top.Science').root?
