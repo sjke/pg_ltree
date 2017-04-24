@@ -19,10 +19,9 @@ It uses a implementation based around PostgreSQL's [ltree](http://www.postgresql
 [![RubyDoc](http://inch-ci.org/github/sjke/pg_ltree.svg?branch=master)](http://www.rubydoc.info/github/sjke/pg_ltree/)
 
 ## Support
-  This branch targets Rails 4, 5.0
   * ***Ruby*** 2.*
-  * ***Rails*** >= 4, < 5.1
-  * ***Pg addapter (gem 'pg')*** >= 0.17, < 0.19
+  * ***Rails*** >= 4, < 5.2
+  * ***Pg adapter (gem 'pg')*** >= 0.17, < 0.21
 
 ## Installation
 
