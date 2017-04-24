@@ -15,6 +15,7 @@ gemfile:
   - gemfiles/activerecord_42_pg_017.gemfile
   - gemfiles/activerecord_42_pg_018.gemfile
   - gemfiles/activerecord_50_pg_018.gemfile
+  - gemfiles/activerecord_51_pg_020.gemfile
 
 services:
   - postgresql
