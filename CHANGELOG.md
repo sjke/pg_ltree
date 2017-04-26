@@ -1,3 +1,8 @@
+## 1.1.4
+
+* [ADDED] Adds method to support ltxtquery value for searching ([#17](https://github.com/sjke/pg_ltree/pull/17) by [@sb1752](https://github.com/sb1752)
+* [IMPROVE] Updated dependency version (Rails 5.1 and Pg adapter 0.21) ([#16](https://github.com/sjke/pg_ltree/pull/16) by [@sb1752](https://github.com/sb1752)
+
 ## 1.1.3
 
 * [ADDED] node instance `height` method ([#6](https://github.com/sjke/pg_ltree/pull/6) by [@caulfield](https://github.com/caulfield))
