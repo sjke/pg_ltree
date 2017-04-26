@@ -1,0 +1,6 @@
+source 'https://rubygems.org'
+
+gem 'activerecord', '>= 5.1.0rc1', '< 5.2', require: 'active_record'
+gem 'pg', '>= 0.20.0', '< 0.21'
+
+gemspec path: '../'
