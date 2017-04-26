@@ -59,6 +59,14 @@ module PgLtree
       def where_path_liked(lquery)
         where "#{ltree_path_column} ~ ?", lquery
       end
+
+      # Get all nodes with path matching full-text-search-like pattern
+      #
+      # @param ltxtquery [String] ltree search query
+      # @return [ActiveRecord::Relation] of matching nodes
+      def where_path_matches_ltxtquery(ltxtquery)
+        where "#{ltree_path_column} @ ?", ltxtquery
+      end
     end
 
     # Define instance methods
