@@ -16,6 +16,7 @@ module PgLtree
 
       if options[:cascade]
         after_update :cascade_update
+        before_destroy :delete_ltree_column_value
         after_destroy :cascade_destroy
       end
 
@@ -96,7 +97,11 @@ module PgLtree
       #
       # @return [String] ltree previous value
       def ltree_path_was
-        public_send :"#{ltree_path_column}_was"
+        if active_record_5_1_or_above?
+          public_send :"#{ltree_path_column}_before_last_save"
+        else
+          public_send :"#{ltree_path_column}_was"
+        end
       end
 
       # Check what current node is root
@@ -228,6 +233,21 @@ module PgLtree
       def cascade_update
         ltree_scope.where(["#{ltree_path_column} <@ ?", ltree_path_was]).where(["#{ltree_path_column} != ?", ltree_path])
                    .update_all ["#{ltree_path_column} = ? || subpath(#{ltree_path_column}, nlevel(?))", ltree_path, ltree_path_was]
+      end
+
+      #
+      # In order for for cascade_destroy to work with the current callbacks, let's first delete the column :/.
+      #
+      def delete_ltree_column_value
+        update_attributes!(ltree_path_column => nil) if active_record_5_1_or_above?
+      end
+
+      #
+      # The behavior of _was changes in Rails 5.1
+      # http://blog.toshima.ru/2017/04/06/saved-change-to-attribute.html 
+      def active_record_5_1_or_above?
+        return true if ActiveRecord::VERSION::MAJOR > 5
+        ActiveRecord::VERSION::MAJOR == 5 && ActiveRecord::VERSION::MINOR >= 1
       end
 
       # Delete all children for current path
