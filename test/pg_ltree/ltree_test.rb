@@ -69,10 +69,6 @@ class PgLtree::LtreeTest < BaseTest
     )
   end
 
-  test '#' do
-
-  end
-
   test '.root?' do
     assert TreeNode.find_by(path: 'Top').root?
     assert_not TreeNode.find_by(path: 'Top.Science').root?
