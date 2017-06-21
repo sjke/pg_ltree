@@ -69,6 +69,10 @@ class PgLtree::LtreeTest < BaseTest
     )
   end
 
+  test '#' do
+
+  end
+
   test '.root?' do
     assert TreeNode.find_by(path: 'Top').root?
     assert_not TreeNode.find_by(path: 'Top.Science').root?
@@ -178,6 +182,13 @@ class PgLtree::LtreeTest < BaseTest
       Top.WoW
       Top.WoW.Amateurs_Astronomy
     )
+  end
+
+  test '.delete_ltree_column_value' do
+    node = TreeNode.find_by!(path: 'Top.Collections')
+    assert_equal node.ltree_path, 'Top.Collections'
+    node.delete_ltree_column_value
+    assert_nil node.ltree_path
   end
 
   test '.cascade_destroy' do
