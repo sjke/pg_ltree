@@ -180,6 +180,13 @@ class PgLtree::LtreeTest < BaseTest
     )
   end
 
+  test '.delete_ltree_column_value' do
+    node = TreeNode.find_by!(path: 'Top.Collections')
+    assert_equal node.ltree_path, 'Top.Collections'
+    node.delete_ltree_column_value
+    assert_nil node.ltree_path
+  end
+
   test '.cascade_destroy' do
     TreeNode.find_by(path: 'Top.Collections').destroy
 
