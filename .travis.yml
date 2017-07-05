@@ -16,6 +16,7 @@ gemfile:
   - gemfiles/activerecord_42_pg_018.gemfile
   - gemfiles/activerecord_50_pg_018.gemfile
   - gemfiles/activerecord_51_pg_020.gemfile
+  - gemfiles/activerecord_51_pg_021.gemfile
 
 services:
   - postgresql
@@ -32,7 +33,11 @@ matrix:
       gemfile: gemfiles/activerecord_50_pg_018.gemfile
     - rvm: 2.0.0
       gemfile: gemfiles/activerecord_51_pg_020.gemfile
+    - rvm: 2.0.0
+      gemfile: gemfiles/activerecord_51_pg_021.gemfile
     - rvm: 2.1.8
       gemfile: gemfiles/activerecord_50_pg_018.gemfile
     - rvm: 2.1.8
       gemfile: gemfiles/activerecord_51_pg_020.gemfile
+    - rvm: 2.1.8
+      gemfile: gemfiles/activerecord_51_pg_021.gemfile

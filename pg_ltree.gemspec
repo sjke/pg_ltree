@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
   s.test_files = Dir['test/**/*']
 
   s.add_dependency 'activerecord', '>= 4.0.0', '< 5.2'
-  s.add_dependency 'pg', '>= 0.17.0', '< 0.21'
+  s.add_dependency 'pg', '>= 0.17.0', '< 0.22'
 
   s.add_development_dependency 'bundler'
   s.add_development_dependency 'rake'

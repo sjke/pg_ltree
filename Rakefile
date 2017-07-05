@@ -29,6 +29,7 @@ namespace :test do
     activerecord_41_pg_017 activerecord_41_pg_018
     activerecord_42_pg_017 activerecord_42_pg_018
     activerecord_50_pg_018 activerecord_51_pg_020
+    activerecord_51_pg_021
   ).freeze
 
   AVAILABLE_CASES.each do |version|
