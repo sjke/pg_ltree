@@ -7,7 +7,7 @@ It uses a implementation based around PostgreSQL's [ltree](http://www.postgresql
 |               |                                  |
 |---------------|:--------------------------------:|
 | **Author**    | Andrei Panamarenka               |
-| **Version**   | 1.1.4 (April 27, 2017)           |
+| **Version**   | 1.1.5 (July 5, 2017)           |
 | **License**   | Released under the MIT license.  |
 
 
@@ -27,7 +27,7 @@ It uses a implementation based around PostgreSQL's [ltree](http://www.postgresql
 
 Add this line to your application's Gemfile:
 
-    gem 'pg_ltree', '1.1.4'
+    gem 'pg_ltree', '1.1.5'
 
 And then execute:
 

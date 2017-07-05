@@ -1,7 +1,12 @@
+## 1.1.5
+
+* [IMPROVE] Update pg version support ([#19](https://github.com/sjke/pg_ltree/pull/19) by [@askamist](https://github.com/askamist))
+* [IMPROVE] Handler Rails 5.1 deprecation warnings ([#18](https://github.com/sjke/pg_ltree/pull/18) by [@HoyaBoya](https://github.com/HoyaBoya) and [#20](https://github.com/sjke/pg_ltree/pull/20) by [@sjke](https://github.com/sjke))
+
 ## 1.1.4
 
-* [ADDED] Adds method to support ltxtquery value for searching ([#17](https://github.com/sjke/pg_ltree/pull/17) by [@sb1752](https://github.com/sb1752)
-* [IMPROVE] Updated dependency version (Rails 5.1 and Pg adapter 0.21) ([#16](https://github.com/sjke/pg_ltree/pull/16) by [@sb1752](https://github.com/sb1752)
+* [ADDED] Adds method to support ltxtquery value for searching ([#17](https://github.com/sjke/pg_ltree/pull/17) by [@sb1752](https://github.com/sb1752))
+* [IMPROVE] Updated dependency version (Rails 5.1 and Pg adapter 0.21) ([#16](https://github.com/sjke/pg_ltree/pull/16) by [@sb1752](https://github.com/sb1752))
 
 ## 1.1.3
 
