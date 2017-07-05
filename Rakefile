@@ -35,7 +35,7 @@ namespace :test do
   AVAILABLE_CASES.each do |version|
     desc "Test pg_ltree against #{version}"
     task version do
-      sh "BUNDLE_GEMFILE='gemfiles/#{version}.gemfile' bundle install --quiet"
+      sh "bundle install --gemfile=gemfiles/#{version}.gemfile --quiet"
       sh "BUNDLE_GEMFILE='gemfiles/#{version}.gemfile' bundle exec rake -t test"
     end
   end
@@ -43,8 +43,7 @@ namespace :test do
   desc 'Run all tests for pg_ltree'
   task :all do
     AVAILABLE_CASES.each do |version|
-      sh "BUNDLE_GEMFILE='gemfiles/#{version}.gemfile' bundle install --quiet"
-      sh "BUNDLE_GEMFILE='gemfiles/#{version}.gemfile' bundle exec rake -t test"
+      sh "rake test:#{version}"
     end
   end
 end
