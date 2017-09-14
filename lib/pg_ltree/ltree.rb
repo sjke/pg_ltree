@@ -37,7 +37,7 @@ module PgLtree
       # @param depth [Integer] Depth of the nodes
       # @return [ActiveRecord::Relation] relations of nodes for the depth
       def at_depth(depth)
-        where "NLEVEL(#{ltree_path_column}) = ?", depth
+        where "NLEVEL(#{table_name}.#{ltree_path_column}) = ?", depth
       end
 
       # Get all leaves
@@ -57,7 +57,7 @@ module PgLtree
       # @param lquery [String] ltree query
       # @return [ActiveRecord::Relation] relations of node'
       def where_path_liked(lquery)
-        where "#{ltree_path_column} ~ ?", lquery
+        where "#{table_name}.#{ltree_path_column} ~ ?", lquery
       end
 
       # Get all nodes with path matching full-text-search-like pattern
@@ -65,7 +65,7 @@ module PgLtree
       # @param ltxtquery [String] ltree search query
       # @return [ActiveRecord::Relation] of matching nodes
       def where_path_matches_ltxtquery(ltxtquery)
-        where "#{ltree_path_column} @ ?", ltxtquery
+        where "#{table_name}.#{ltree_path_column} @ ?", ltxtquery
       end
     end
 
@@ -129,21 +129,21 @@ module PgLtree
       #
       # return [Object] root node
       def root
-        ltree_scope.where("#{ltree_path_column} = SUBPATH(?, 0, 1)", ltree_path).first
+        ltree_scope.where("#{ltree_scope.table_name}.#{ltree_path_column} = SUBPATH(?, 0, 1)", ltree_path).first
       end
 
       # Get parent of the node
       #
       # return [Object] root node
       def parent
-        ltree_scope.find_by "#{ltree_path_column} = SUBPATH(?, 0, NLEVEL(?) - 1)", ltree_path, ltree_path
+        ltree_scope.find_by "#{ltree_scope.table_name}.#{ltree_path_column} = SUBPATH(?, 0, NLEVEL(?) - 1)", ltree_path, ltree_path
       end
 
       # Get leaves of the node
       #
       # @return [ActiveRecord::Relation]
       def leaves
-        ltree_scope.leaves.where("#{ltree_path_column} <@ ?", ltree_path).where.not ltree_path_column => ltree_path
+        ltree_scope.leaves.where("#{ltree_scope.table_name}.#{ltree_path_column} <@ ?", ltree_path).where.not ltree_path_column => ltree_path
       end
 
       # Check what current node have leaves
@@ -157,7 +157,7 @@ module PgLtree
       #
       # @return [ActiveRecord::Relation]
       def self_and_ancestors
-        ltree_scope.where("#{ltree_path_column} @> ?", ltree_path)
+        ltree_scope.where("#{ltree_scope.table_name}.#{ltree_path_column} @> ?", ltree_path)
       end
 
       # Get ancestors
@@ -171,7 +171,7 @@ module PgLtree
       #
       # @return [ActiveRecord::Relation]
       def self_and_descendants
-        ltree_scope.where("#{ltree_path_column} <@ ?", ltree_path)
+        ltree_scope.where("#{ltree_scope.table_name}.#{ltree_path_column} <@ ?", ltree_path)
       end
 
       # Get self and descendants
@@ -202,7 +202,7 @@ module PgLtree
       # @return [ActiveRecord::Relation]
       def self_and_siblings
         ltree_scope.where(
-          "SUBPATH(?, 0, NLEVEL(?) - 1) @> #{ltree_path_column} AND nlevel(#{ltree_path_column}) = NLEVEL(?)",
+          "SUBPATH(?, 0, NLEVEL(?) - 1) @> #{ltree_scope.table_name}.#{ltree_path_column} AND nlevel(#{ltree_scope.table_name}.#{ltree_path_column}) = NLEVEL(?)",
           ltree_path, ltree_path, ltree_path
         )
       end
@@ -218,7 +218,7 @@ module PgLtree
       #
       # @return [ActiveRecord::Relation]
       def children
-        ltree_scope.where "? @> #{ltree_path_column} AND nlevel(#{ltree_path_column}) = NLEVEL(?) + 1",
+        ltree_scope.where "? @> #{ltree_scope.table_name}.#{ltree_path_column} AND nlevel(#{ltree_scope.table_name}.#{ltree_path_column}) = NLEVEL(?) + 1",
                           ltree_path, ltree_path
       end
 
@@ -226,7 +226,7 @@ module PgLtree
       #
       # @return [ActiveRecord::Relation]
       def cascade_update
-        ltree_scope.where(["#{ltree_path_column} <@ ?", ltree_path_was]).where(["#{ltree_path_column} != ?", ltree_path])
+        ltree_scope.where(["#{ltree_scope.table_name}.#{ltree_path_column} <@ ?", ltree_path_was]).where(["#{ltree_scope.table_name}.#{ltree_path_column} != ?", ltree_path])
                    .update_all ["#{ltree_path_column} = ? || subpath(#{ltree_path_column}, nlevel(?))", ltree_path, ltree_path_was]
       end
 
@@ -234,7 +234,7 @@ module PgLtree
       #
       # @return [ActiveRecord::Relation]
       def cascade_destroy
-        ltree_scope.where("#{ltree_path_column} <@ ?", ltree_path_was).delete_all
+        ltree_scope.where("#{ltree_scope.table_name}.#{ltree_path_column} <@ ?", ltree_path_was).delete_all
       end
     end
   end
