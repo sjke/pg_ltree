@@ -1,3 +1,7 @@
+## 1.1.6
+
+* [IMPROVE] Adds `table_name` prefix  for a generating SQL queries ([#21](https://github.com/sjke/pg_ltree/pull/21) by [@arjan0307](https://github.com/arjan0307))
+
 ## 1.1.5
 
 * [IMPROVE] Update pg version support ([#19](https://github.com/sjke/pg_ltree/pull/19) by [@askamist](https://github.com/askamist))
