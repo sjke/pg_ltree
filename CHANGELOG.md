@@ -1,6 +1,10 @@
+## 1.1.7
+
+* [IMPROVE] Update rails/pg version support (rails 5.2, pg 1.0)
+
 ## 1.1.6
 
-* [IMPROVE] Adds `table_name` prefix  for a generating SQL queries ([#21](https://github.com/sjke/pg_ltree/pull/21) by [@arjan0307](https://github.com/arjan0307))
+* [IMPROVE] Adds `table_name` prefix for a generating SQL queries ([#21](https://github.com/sjke/pg_ltree/pull/21) by [@arjan0307](https://github.com/arjan0307))
 
 ## 1.1.5
 
