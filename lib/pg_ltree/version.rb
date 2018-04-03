@@ -3,5 +3,5 @@
 # @author a.ponomarenko
 module PgLtree
   # Gem Version
-  VERSION = '1.1.6'.freeze
+  VERSION = '1.1.7'.freeze
 end
