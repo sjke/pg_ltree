@@ -92,11 +92,22 @@ module PgLtree
         public_send ltree_path_column
       end
 
-      # Get lTree previous value
+      # Get ltree original value before the save just occurred
+      # https://api.rubyonrails.org/classes/ActiveRecord/AttributeMethods/Dirty.html#method-i-attribute_before_last_save
       #
       # @return [String] ltree previous value
-      def ltree_path_was
-        public_send :"#{ltree_path_column}_was"
+      def ltree_path_before_last_save
+        public_send :attribute_before_last_save, ltree_path_column
+      end
+
+      # Get lTree previous value
+      # originally +attribute_was+ used in before create/update, destroy won't call +save+ so this work
+      # https://api.rubyonrails.org/classes/ActiveRecord/AttributeMethods/Dirty.html#method-i-attribute_in_database
+      #
+      # @return [String] ltree value in database
+
+      def ltree_path_in_database
+        public_send :attribute_in_database, ltree_path_column
       end
 
       # Check what current node is root
@@ -226,15 +237,15 @@ module PgLtree
       #
       # @return [ActiveRecord::Relation]
       def cascade_update
-        ltree_scope.where(["#{ltree_scope.table_name}.#{ltree_path_column} <@ ?", ltree_path_was]).where(["#{ltree_scope.table_name}.#{ltree_path_column} != ?", ltree_path])
-                   .update_all ["#{ltree_path_column} = ? || subpath(#{ltree_path_column}, nlevel(?))", ltree_path, ltree_path_was]
+        ltree_scope.where(["#{ltree_scope.table_name}.#{ltree_path_column} <@ ?", ltree_path_before_last_save]).where(["#{ltree_scope.table_name}.#{ltree_path_column} != ?", ltree_path])
+                   .update_all ["#{ltree_path_column} = ? || subpath(#{ltree_path_column}, nlevel(?))", ltree_path, ltree_path_before_last_save]
       end
 
       # Delete all children for current path
       #
       # @return [ActiveRecord::Relation]
       def cascade_destroy
-        ltree_scope.where("#{ltree_scope.table_name}.#{ltree_path_column} <@ ?", ltree_path_was).delete_all
+        ltree_scope.where("#{ltree_scope.table_name}.#{ltree_path_column} <@ ?", ltree_path_in_database).delete_all
       end
     end
   end
