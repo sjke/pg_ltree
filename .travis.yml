@@ -6,6 +6,7 @@ rvm:
   - 2.2.4
   - 2.3.0
   - 2.4.0
+  - 2.5.5
   - ruby-head
 
 gemfile:
@@ -19,6 +20,9 @@ gemfile:
   - gemfiles/activerecord_51_pg_020.gemfile
   - gemfiles/activerecord_51_pg_021.gemfile
   - gemfiles/activerecord_52_pg_100.gemfile
+  - gemfiles/activerecord_60_pg_021.gemfile
+  - gemfiles/activerecord_60_pg_100.gemfile
+
 
 services:
   - postgresql
@@ -47,3 +51,7 @@ matrix:
       gemfile: gemfiles/activerecord_51_pg_021.gemfile
     - rvm: 2.1.8
       gemfile: gemfiles/activerecord_52_pg_100.gemfile
+    - rvm: 2.5.5
+      gemfile: gemfiles/activerecord_60_pg_21.gemfile
+    - rvm: 2.5.5
+      gemfile: gemfiles/activerecord_60_pg_100.gemfile
