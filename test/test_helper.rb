@@ -31,6 +31,13 @@ class BaseTest < ActiveSupport::TestCase
       exit 0
     end
 
+    begin
+      PG.connect(host: db_connection["host"], user: db_connection["username"], password: db_connection["password"])
+        .exec("CREATE DATABASE #{db_connection['database']}")
+    rescue
+      # Ignore errors on DB:CEATE
+    end
+
     ActiveRecord::Base.establish_connection db_connection
     ActiveRecord::Schema.verbose = false
 
