@@ -7,7 +7,7 @@ It uses a implementation based around PostgreSQL's [ltree](http://www.postgresql
 |             |                                 |
 | ----------- | :-----------------------------: |
 | **Author**  |       Andrei Panamarenka        |
-| **Version** |     1.1.7 (March 20, 2018)      |
+| **Version** |     1.1.8 (December 13, 2019)   |
 | **License** | Released under the MIT license. |
 
 ##
@@ -20,14 +20,14 @@ It uses a implementation based around PostgreSQL's [ltree](http://www.postgresql
 ## Support
 
 * **_Ruby_** 2.\*
-* **_Rails_** >= 4, < 5.3
+* **_Rails_** >= 4, < 7
 * **_Pg adapter (gem 'pg')_** >= 0.17, < 2
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
-    gem 'pg_ltree', '1.1.7'
+    gem 'pg_ltree', '1.1.8'
 
 And then execute:
 
