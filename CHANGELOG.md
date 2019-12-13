@@ -1,3 +1,8 @@
+## 1.1.8
+
+* [IMPROVE] Update rails/pg version support (rails 6, pg 1.0)
+* [FIXED] Fix #leaves used with a custom relation ([#29](https://github.com/sjke/pg_ltree/pull/29) by [@attilahorvath](https://github.com/attilahorvath))
+
 ## 1.1.7
 
 * [IMPROVE] Update rails/pg version support (rails 5.2, pg 1.0)
