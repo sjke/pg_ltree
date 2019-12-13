@@ -44,12 +44,12 @@ module PgLtree
       #
       # @return [ActiveRecord::Relation] relations of node's leaves
       def leaves
-        subquery =
-          unscoped.select("COUNT(subquery.#{ltree_path_column}) = 1")
-                  .from("#{table_name} AS subquery")
-                  .where("subquery.#{ltree_path_column} <@ #{table_name}.#{ltree_path_column}")
-        subquery = subquery.where(subquery: current_scope.where_values_hash) if current_scope
-        where subquery.to_sql
+        subquery = unscoped.select("#{table_name}.#{ltree_path_column}")
+                           .from("#{table_name} AS subquery")
+                           .where("#{table_name}.#{ltree_path_column} <> subquery.#{ltree_path_column}")
+                           .where("#{table_name}.#{ltree_path_column} @> subquery.#{ltree_path_column}")
+
+        where.not ltree_path_column => subquery
       end
 
       # Get all with nodes when path liked the lquery

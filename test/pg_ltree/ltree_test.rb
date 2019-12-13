@@ -53,6 +53,16 @@ class PgLtree::LtreeTest < BaseTest
     )
   end
 
+  test '#leaves with a relation' do
+    assert_equal TreeNode.where("path <> 'Top.Collections.Pictures.Astronomy.Stars'").leaves.pluck(:path), %w(
+      Top.Science.Astronomy.Astrophysics
+      Top.Science.Astronomy.Cosmology
+      Top.Hobbies.Amateurs_Astronomy
+      Top.Collections.Pictures.Astronomy.Galaxies
+      Top.Collections.Pictures.Astronomy.Astronauts
+    )
+  end
+
   test '#where_path_liked' do
     assert_equal TreeNode.where_path_liked('*{2}.Astronomy|Pictures').pluck(:path), %w(
       Top.Science.Astronomy
