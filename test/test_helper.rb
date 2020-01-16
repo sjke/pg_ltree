@@ -7,6 +7,8 @@ rescue Bundler::BundlerError => e
   exit e.status_code
 end
 
+$VERBOSE=nil
+
 require 'pg'
 require 'pg_ltree'
 require 'minitest/autorun'
@@ -75,4 +77,9 @@ end
 
 class TreeNode < ActiveRecord::Base
   ltree
+end
+
+class TreeWithoutCascadeNode < ActiveRecord::Base
+  self.table_name = 'tree_nodes'
+  ltree :path, cascade: false
 end
