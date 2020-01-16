@@ -17,6 +17,9 @@ class PgLtree::ScopedForTest < BaseTest
       Top.Collections.Pictures.Astronomy.Stars
       Top.Collections.Pictures.Astronomy.Galaxies
       Top.Collections.Pictures.Astronomy.Astronauts
+      Top.Collections.Videos
+      Top.Collections.Videos.Vacation
+      Top.Collections.Videos.NewYear
     ).each do |path|
       %i( active deactive ).each do |status|
         NotUniqTreeNode.create! new_path: path, status: status
@@ -47,6 +50,8 @@ class PgLtree::ScopedForTest < BaseTest
       Top.Collections.Pictures.Astronomy.Stars
       Top.Collections.Pictures.Astronomy.Galaxies
       Top.Collections.Pictures.Astronomy.Astronauts
+      Top.Collections.Videos.Vacation
+      Top.Collections.Videos.NewYear
     )
   end
 
@@ -161,32 +166,25 @@ class PgLtree::ScopedForTest < BaseTest
   end
 
   test '.cascade_destroy' do
-    assert_equal NotUniqTreeNode.where("new_path <@ 'Top.Collections'").pluck(:new_path), %w(
-      Top.Collections
+    assert_equal NotUniqTreeNode.where("new_path <@ 'Top.Collections'").where(status: :active).pluck(:new_path), %w(
       Top.Collections
       Top.Collections.Pictures
-      Top.Collections.Pictures
-      Top.Collections.Pictures.Astronomy
       Top.Collections.Pictures.Astronomy
       Top.Collections.Pictures.Astronomy.Stars
-      Top.Collections.Pictures.Astronomy.Stars
-      Top.Collections.Pictures.Astronomy.Galaxies
       Top.Collections.Pictures.Astronomy.Galaxies
       Top.Collections.Pictures.Astronomy.Astronauts
-      Top.Collections.Pictures.Astronomy.Astronauts
+      Top.Collections.Videos
+      Top.Collections.Videos.Vacation
+      Top.Collections.Videos.NewYear
     )
 
-    NotUniqTreeNode.find_by(new_path: 'Top.Collections', status: :active).destroy
+    NotUniqTreeNode.find_by(new_path: 'Top.Collections.Pictures', status: :active).destroy
 
-    assert_equal NotUniqTreeNode.where("new_path <@ 'Top.Collections'").where(status: :active).pluck(:new_path), %w()
-
-    assert_equal NotUniqTreeNode.where("new_path <@ 'Top.Collections'").where(status: :deactive).pluck(:new_path), %w(
+    assert_equal NotUniqTreeNode.where("new_path <@ 'Top.Collections'").where(status: :active).pluck(:new_path), %w(
       Top.Collections
-      Top.Collections.Pictures
-      Top.Collections.Pictures.Astronomy
-      Top.Collections.Pictures.Astronomy.Stars
-      Top.Collections.Pictures.Astronomy.Galaxies
-      Top.Collections.Pictures.Astronomy.Astronauts
+      Top.Collections.Videos
+      Top.Collections.Videos.Vacation
+      Top.Collections.Videos.NewYear
     )
   end
 end
