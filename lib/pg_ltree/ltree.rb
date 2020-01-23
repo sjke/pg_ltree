@@ -9,12 +9,12 @@ module PgLtree
     # Initialzie ltree for active model
     #
     # @param column [String] ltree column name
-    def ltree(column = :path, options: { cascade: true })
+    def ltree(column = :path, cascade: true)
       cattr_accessor :ltree_path_column
 
       self.ltree_path_column = column
 
-      if options[:cascade]
+      if cascade
         after_update :cascade_update
         after_destroy :cascade_destroy
       end
@@ -245,7 +245,7 @@ module PgLtree
       #
       # @return [ActiveRecord::Relation]
       def cascade_destroy
-        ltree_scope.where("#{ltree_scope.table_name}.#{ltree_path_column} <@ ?", ltree_path_in_database).delete_all
+        ltree_scope.where("#{ltree_scope.table_name}.#{ltree_path_column} <@ ?", ltree_path_in_database).destroy_all
       end
     end
   end
