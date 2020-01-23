@@ -17,6 +17,9 @@ class PgLtree::LtreeTest < BaseTest
       Top.Collections.Pictures.Astronomy.Stars
       Top.Collections.Pictures.Astronomy.Galaxies
       Top.Collections.Pictures.Astronomy.Astronauts
+      Top.Collections.Videos
+      Top.Collections.Videos.Vacation
+      Top.Collections.Videos.NewYear
     ).each do |path|
       TreeNode.create! path: path
     end
@@ -50,6 +53,8 @@ class PgLtree::LtreeTest < BaseTest
       Top.Collections.Pictures.Astronomy.Stars
       Top.Collections.Pictures.Astronomy.Galaxies
       Top.Collections.Pictures.Astronomy.Astronauts
+      Top.Collections.Videos.Vacation
+      Top.Collections.Videos.NewYear
     )
   end
 
@@ -60,6 +65,8 @@ class PgLtree::LtreeTest < BaseTest
       Top.Hobbies.Amateurs_Astronomy
       Top.Collections.Pictures.Astronomy.Galaxies
       Top.Collections.Pictures.Astronomy.Astronauts
+      Top.Collections.Videos.Vacation
+      Top.Collections.Videos.NewYear
     )
   end
 
@@ -191,8 +198,52 @@ class PgLtree::LtreeTest < BaseTest
   end
 
   test '.cascade_destroy' do
-    TreeNode.find_by(path: 'Top.Collections').destroy
+    assert_equal TreeNode.where("path <@ 'Top.Collections'").pluck(:path), %w(
+      Top.Collections
+      Top.Collections.Pictures
+      Top.Collections.Pictures.Astronomy
+      Top.Collections.Pictures.Astronomy.Stars
+      Top.Collections.Pictures.Astronomy.Galaxies
+      Top.Collections.Pictures.Astronomy.Astronauts
+      Top.Collections.Videos
+      Top.Collections.Videos.Vacation
+      Top.Collections.Videos.NewYear
+    )
 
-    assert_equal TreeNode.where("path ~ 'Top.Collections'").pluck(:path), %w()
+    TreeNode.find_by(path: 'Top.Collections.Pictures').destroy
+
+    assert_equal TreeNode.where("path <@ 'Top.Collections'").pluck(:path), %w(
+      Top.Collections
+      Top.Collections.Videos
+      Top.Collections.Videos.Vacation
+      Top.Collections.Videos.NewYear
+    )
+  end
+
+  test '.destroy' do
+    assert_equal TreeWithoutCascadeNode.where("path <@ 'Top.Collections'").pluck(:path), %w(
+      Top.Collections
+      Top.Collections.Pictures
+      Top.Collections.Pictures.Astronomy
+      Top.Collections.Pictures.Astronomy.Stars
+      Top.Collections.Pictures.Astronomy.Galaxies
+      Top.Collections.Pictures.Astronomy.Astronauts
+      Top.Collections.Videos
+      Top.Collections.Videos.Vacation
+      Top.Collections.Videos.NewYear
+    )
+
+    TreeWithoutCascadeNode.find_by(path: 'Top.Collections.Pictures').destroy
+
+    assert_equal TreeWithoutCascadeNode.where("path <@ 'Top.Collections'").pluck(:path), %w(
+      Top.Collections
+      Top.Collections.Pictures.Astronomy
+      Top.Collections.Pictures.Astronomy.Stars
+      Top.Collections.Pictures.Astronomy.Galaxies
+      Top.Collections.Pictures.Astronomy.Astronauts
+      Top.Collections.Videos
+      Top.Collections.Videos.Vacation
+      Top.Collections.Videos.NewYear
+    )
   end
 end
