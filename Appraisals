@@ -1,6 +1,8 @@
-appraise "activerecord_52_pg_10" do
-  gem 'activerecord', '~> 5.2', require: 'active_record'
-  gem 'pg', '~> 1.0'
+unless RUBY_VERSION =~ /^3/
+  appraise "activerecord_52_pg_10" do
+    gem 'activerecord', '~> 5.2', require: 'active_record'
+    gem 'pg', '~> 1.0'
+  end
 end
 
 appraise "activerecord_60_pg_10" do
@@ -18,9 +20,11 @@ appraise "activerecord_70_pg_10" do
   gem 'pg', '~> 1.0'
 end
 
-appraise "activerecord_52_pg_11" do
-  gem 'activerecord', '~> 5.2', require: 'active_record'
-  gem 'pg', '~> 1.1'
+unless RUBY_VERSION =~ /^3/
+  appraise "activerecord_52_pg_11" do
+    gem 'activerecord', '~> 5.2', require: 'active_record'
+    gem 'pg', '~> 1.1'
+  end
 end
 
 appraise "activerecord_60_pg_11" do
@@ -38,9 +42,11 @@ appraise "activerecord_70_pg_11" do
   gem 'pg', '~> 1.1'
 end
 
-appraise "activerecord_52_pg_12" do
-  gem 'activerecord', '~> 5.2', require: 'active_record'
-  gem 'pg', '~> 1.2'
+unless RUBY_VERSION =~ /^3/
+  appraise "activerecord_52_pg_12" do
+    gem 'activerecord', '~> 5.2', require: 'active_record'
+    gem 'pg', '~> 1.2'
+  end
 end
 
 appraise "activerecord_60_pg_12" do
