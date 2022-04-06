@@ -20,32 +20,3 @@ Rake::TestTask.new(:test) do |t|
   t.verbose = false
 end
 
-desc 'Default: run unit tests.'
-task default: 'test:all'
-
-namespace :test do
-  AVAILABLE_CASES = %w(
-    activerecord_40_pg_017 activerecord_40_pg_018
-    activerecord_41_pg_017 activerecord_41_pg_018
-    activerecord_42_pg_017 activerecord_42_pg_018
-    activerecord_50_pg_018 activerecord_51_pg_020
-    activerecord_51_pg_021 activerecord_52_pg_100
-    activerecord_60_pg_021 activerecord_60_pg_100
-    activerecord_60_pg_110
-  ).freeze
-
-  AVAILABLE_CASES.each do |version|
-    desc "Test pg_ltree against #{version}"
-    task version do
-      sh "bundle install --gemfile=gemfiles/#{version}.gemfile --quiet"
-      sh "BUNDLE_GEMFILE='gemfiles/#{version}.gemfile' bundle exec rake -t test"
-    end
-  end
-
-  desc 'Run all tests for pg_ltree'
-  task :all do
-    AVAILABLE_CASES.each do |version|
-      sh "rake test:#{version}"
-    end
-  end
-end

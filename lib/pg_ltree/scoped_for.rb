@@ -21,7 +21,7 @@ module PgLtree
       #
       # @return current class
       def ltree_scope
-        self.class.where *(ltree_scoped_for.map { |column| { column => public_send(column) } })
+        self.class.where(*(ltree_scoped_for.map { |column| { column => public_send(column) } }))
       end
     end
   end

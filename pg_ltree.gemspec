@@ -18,7 +18,7 @@ Gem::Specification.new do |s|
   s.files = Dir['{app,config,db,lib}/**/*', 'MIT-LICENSE', 'Rakefile', 'README.rdoc']
   s.test_files = Dir['test/**/*']
 
-  s.add_dependency 'activerecord', '>= 4.0.0', '<= 7.0.0.rc1'
+  s.add_dependency 'activerecord', '>= 5.2', '< 8.0'
   s.add_dependency 'pg', '>= 0.17.0', '< 2'
 
   s.add_development_dependency 'bundler'
@@ -26,4 +26,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'pry'
   s.add_development_dependency 'yard'
   s.add_development_dependency 'minitest'
+  s.add_development_dependency 'appraisal'
 end
