@@ -3,8 +3,6 @@ module PgLtree
   #
   # @see [ActiveRecord::Base]
   # @see http://www.postgresql.org/docs/current/static/ltree.html
-  #
-  # @author a.ponomarenko
   module Ltree
     # Initialzie ltree for active model
     #

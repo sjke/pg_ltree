@@ -1,5 +1,5 @@
 adapter:  postgresql
 host:     localhost
 username: postgres
-password:
+password: postgres
 database: pg_ltree_test

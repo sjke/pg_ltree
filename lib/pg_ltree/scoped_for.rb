@@ -1,8 +1,6 @@
 module PgLtree
   # Narrowing the Scope for ActiveRecord Model
   # @note When model have composite uniq key (for example: state + path), you should use this module for narrowing the scope
-  #
-  # @author a.ponomarenko
   module ScopedFor
     # Define base instance scope for model by columns
     #
