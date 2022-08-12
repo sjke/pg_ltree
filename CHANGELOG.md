@@ -1,7 +1,8 @@
 ## 1.1.9
 
-* [IMPROVE] Add rails version support (rails 7)
-
+* [IMPROVE] Add Rails 7 version support ([#29](https://github.com/sjke/pg_ltree/pull/33) by [@chrisortman](https://github.com/chrisortman))
+* [IMPROVE] Add Ruby 3 version support ([#29](https://github.com/sjke/pg_ltree/pull/33) by [@chrisortman](https://github.com/chrisortman))
+  
 ## 1.1.8
 
 * [IMPROVE] Update rails/pg version support (rails 6, pg 1.0)
