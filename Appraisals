@@ -1,59 +1,29 @@
-unless RUBY_VERSION =~ /^3/
-  # Rails 5.2
-  appraise "activerecord_52_pg_10" do
-    gem 'activerecord', '~> 5.2', require: 'active_record'
-    gem 'pg', '~> 1.0'
-  end
-  appraise "activerecord_52_pg_11" do
-    gem 'activerecord', '~> 5.2', require: 'active_record'
-    gem 'pg', '~> 1.1'
-  end
-  appraise "activerecord_52_pg_12" do
-    gem 'activerecord', '~> 5.2', require: 'active_record'
-    gem 'pg', '~> 1.2'
+def version_to_label(version)
+  version.scan(/\d/).join
+end
+
+def add_appraise_for(activerecord_version:, pg_version:)
+  appraise "activerecord_#{version_to_label(activerecord_version)}_pg_#{version_to_label(pg_version)}" do
+    gem 'activerecord', activerecord_version, require: 'active_record'
+    gem 'pg', pg_version
   end
 end
 
-# Rails 6.0
-appraise "activerecord_60_pg_10" do
-  gem 'activerecord', '~> 6.0', require: 'active_record'
-  gem 'pg', '~> 1.0'
-end
-appraise "activerecord_60_pg_11" do
-  gem 'activerecord', '~> 6.0', require: 'active_record'
-  gem 'pg', '~> 1.1'
-end
-appraise "activerecord_60_pg_12" do
-  gem 'activerecord', '~> 6.0', require: 'active_record'
-  gem 'pg', '~> 1.2'
+SUPPORTED_PG_VERSIONS = ['~> 1.0', '~> 1.1', '~> 1.2', '~> 1.3', '~> 1.4']
+
+if RUBY_VERSION <= '3.0'
+  SUPPORTED_PG_VERSIONS.map do |pg_version|
+    add_appraise_for(activerecord_version: '~> 5.2', pg_version: pg_version)
+  end
 end
 
-# Rails 6.1
-appraise "activerecord_61_pg_10" do
-  gem 'activerecord', '~> 6.1', require: 'active_record'
-  gem 'pg', '~> 1.0'
-end
-appraise "activerecord_61_pg_11" do
-  gem 'activerecord', '~> 6.1', require: 'active_record'
-  gem 'pg', '~> 1.1'
-end
-appraise "activerecord_61_pg_12" do
-  gem 'activerecord', '~> 6.1', require: 'active_record'
-  gem 'pg', '~> 1.2'
+SUPPORTED_PG_VERSIONS.map do |pg_version|
+  add_appraise_for(activerecord_version: '~> 6.0', pg_version: pg_version)
+  add_appraise_for(activerecord_version: '~> 6.1', pg_version: pg_version)
 end
 
 if RUBY_VERSION >= '2.7'
-  # Rails 7
-  appraise "activerecord_70_pg_10" do
-    gem 'activerecord', '~> 7.0', require: 'active_record'
-    gem 'pg', '~> 1.0'
-  end
-  appraise "activerecord_70_pg_11" do
-    gem 'activerecord', '~> 7.0', require: 'active_record'
-    gem 'pg', '~> 1.1'
-  end
-  appraise "activerecord_70_pg_12" do
-    gem 'activerecord', '~> 7.0', require: 'active_record'
-    gem 'pg', '~> 1.2'
+  SUPPORTED_PG_VERSIONS.map do |pg_version|
+    add_appraise_for(activerecord_version: '~> 7.0', pg_version: pg_version)
   end
 end

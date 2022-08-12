@@ -19,9 +19,9 @@ It uses a implementation based around PostgreSQL's [ltree](http://www.postgresql
 
 ## Support
 
-* **_Ruby_** 2.\*
+* **_Ruby_** >= 2.0, >= 3.0
 * **_Rails_** >= 4, < 8
-* **_Pg adapter (gem 'pg')_** >= 0.17, < 2
+* **_Pg adapter (gem 'pg')_** >= 1.0, < 2
 
 ## Installation
 
