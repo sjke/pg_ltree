@@ -1,6 +1,6 @@
 ## 1.1.9
 
-* [IMPROVE] Unlock rails version support (Rails 5.2+)
+* [IMPROVE] Add rails version support (rails 7)
 
 ## 1.1.8
 
