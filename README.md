@@ -7,27 +7,27 @@ It uses a implementation based around PostgreSQL's [ltree](http://www.postgresql
 |             |                                 |
 | ----------- | :-----------------------------: |
 | **Author**  |       Andrei Panamarenka        |
-| **Version** |     1.1.8 (December 13, 2019)   |
+| **Version** |     1.1.9 (August 13, 2022)   |
 | **License** | Released under the MIT license. |
 
 ##
 
 [![Gem Version](https://badge.fury.io/rb/pg_ltree.svg)](http://badge.fury.io/rb/pg_ltree)
-[![Build Status](https://travis-ci.org/sjke/pg_ltree.svg?branch=travis-ci)](https://travis-ci.org/sjke/pg_ltree)
+[![Build Status](https://github.com/sjke/pg_ltree/actions/workflows/tests.yml/badge.svg)](https://github.com/sjke/pg_ltree/actions/workflows/tests.yml)
 [![Code Climate](https://codeclimate.com/github/sjke/pg_ltree/badges/gpa.svg)](https://codeclimate.com/github/sjke/pg_ltree)
 [![RubyDoc](http://inch-ci.org/github/sjke/pg_ltree.svg?branch=master)](http://www.rubydoc.info/github/sjke/pg_ltree/)
 
 ## Support
 
 * **_Ruby_** 2.\*
-* **_Rails_** >= 4, < 7
+* **_Rails_** >= 4, < 8
 * **_Pg adapter (gem 'pg')_** >= 0.17, < 2
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
-    gem 'pg_ltree', '1.1.8'
+    gem 'pg_ltree', '1.1.9'
 
 And then execute:
 
