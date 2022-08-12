@@ -1,3 +1,7 @@
+## 1.1.9
+
+* [IMPROVE] Unlock rails version support (Rails 5.2+)
+
 ## 1.1.8
 
 * [IMPROVE] Update rails/pg version support (rails 6, pg 1.0)

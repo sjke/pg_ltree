@@ -10,19 +10,18 @@ rvm:
   - ruby-head
 
 gemfile:
-  - gemfiles/activerecord_40_pg_017.gemfile
-  - gemfiles/activerecord_40_pg_018.gemfile
-  - gemfiles/activerecord_41_pg_017.gemfile
-  - gemfiles/activerecord_41_pg_018.gemfile
-  - gemfiles/activerecord_42_pg_017.gemfile
-  - gemfiles/activerecord_42_pg_018.gemfile
-  - gemfiles/activerecord_50_pg_018.gemfile
-  - gemfiles/activerecord_51_pg_020.gemfile
-  - gemfiles/activerecord_51_pg_021.gemfile
-  - gemfiles/activerecord_52_pg_100.gemfile
-  - gemfiles/activerecord_60_pg_021.gemfile
-  - gemfiles/activerecord_60_pg_100.gemfile
-
+  - gemfiles/activerecord_52_pg_10.gemfile
+  - gemfiles/activerecord_52_pg_11.gemfile
+  - gemfiles/activerecord_52_pg_12.gemfile
+  - gemfiles/activerecord_60_pg_10.gemfile
+  - gemfiles/activerecord_60_pg_11.gemfile
+  - gemfiles/activerecord_60_pg_12.gemfile
+  - gemfiles/activerecord_61_pg_10.gemfile
+  - gemfiles/activerecord_61_pg_11.gemfile
+  - gemfiles/activerecord_61_pg_12.gemfile
+  - gemfiles/activerecord_70_pg_10.gemfile
+  - gemfiles/activerecord_70_pg_11.gemfile
+  - gemfiles/activerecord_70_pg_12.gemfile
 
 services:
   - postgresql
@@ -36,22 +35,8 @@ matrix:
     - rvm: ruby-head
   exclude:
     - rvm: 2.0.0
-      gemfile: gemfiles/activerecord_50_pg_018.gemfile
+      gemfile: gemfiles/activerecord_52_pg_10.gemfile
     - rvm: 2.0.0
-      gemfile: gemfiles/activerecord_51_pg_020.gemfile
+      gemfile: gemfiles/activerecord_52_pg_11.gemfile
     - rvm: 2.0.0
-      gemfile: gemfiles/activerecord_51_pg_020.gemfile
-    - rvm: 2.0.0
-      gemfile: gemfiles/activerecord_52_pg_100.gemfile
-    - rvm: 2.1.8
-      gemfile: gemfiles/activerecord_50_pg_018.gemfile
-    - rvm: 2.1.8
-      gemfile: gemfiles/activerecord_51_pg_020.gemfile
-    - rvm: 2.1.8
-      gemfile: gemfiles/activerecord_51_pg_021.gemfile
-    - rvm: 2.1.8
-      gemfile: gemfiles/activerecord_52_pg_100.gemfile
-    - rvm: 2.5.5
-      gemfile: gemfiles/activerecord_60_pg_21.gemfile
-    - rvm: 2.5.5
-      gemfile: gemfiles/activerecord_60_pg_100.gemfile
+      gemfile: gemfiles/activerecord_52_pg_12.gemfile
