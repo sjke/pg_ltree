@@ -13,7 +13,7 @@ It uses a implementation based around PostgreSQL's [ltree](http://www.postgresql
 ##
 
 [![Gem Version](https://badge.fury.io/rb/pg_ltree.svg)](http://badge.fury.io/rb/pg_ltree)
-[![Build Status](https://travis-ci.org/sjke/pg_ltree.svg?branch=travis-ci)](https://travis-ci.org/sjke/pg_ltree)
+[![Build Status](https://github.com/sjke/pg_ltree/actions/workflows/tests.yml/badge.svg)](https://github.com/sjke/pg_ltree/actions/workflows/tests.yml)
 [![Code Climate](https://codeclimate.com/github/sjke/pg_ltree/badges/gpa.svg)](https://codeclimate.com/github/sjke/pg_ltree)
 [![RubyDoc](http://inch-ci.org/github/sjke/pg_ltree.svg?branch=master)](http://www.rubydoc.info/github/sjke/pg_ltree/)
 
