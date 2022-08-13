@@ -1,9 +1,13 @@
-name: Test
+name: Gem Tests
 
-on: [pull_request]
+on: 
+  pull_request:
+  push:
+    branches:
+      - master
 
 jobs:
-  test:
+  run:
     services:
       postgres:
         image: postgres
@@ -57,7 +61,7 @@ jobs:
           bundle exec appraisal install
 
       - name: Setup DB
-        run: cp test/database.yml.sample test/database.yml
+        run: cp spec/database.yml.sample spec/database.yml
 
       - name: Run tests
-        run: bundle exec appraisal rake test
+        run: bundle exec appraisal rake spec
