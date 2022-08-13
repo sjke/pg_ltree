@@ -1,22 +1,17 @@
-require 'bundler/gem_tasks'
-
-require 'rake/testtask'
-require 'rdoc/task'
-
-gemspec = eval(File.read(Dir['*.gemspec'].first))
+require "bundler/gem_tasks"
+require "standard/rake"
+require "rspec/core/rake_task"
+require "rdoc/task"
+require "appraisal"
 
 RDoc::Task.new(:rdoc) do |rdoc|
-  rdoc.rdoc_dir = 'rdoc'
-  rdoc.title    = 'PgLtree'
-  rdoc.options << '--line-numbers'
-  rdoc.rdoc_files.include('README.rdoc')
-  rdoc.rdoc_files.include('lib/**/*.rb')
+  rdoc.rdoc_dir = "rdoc"
+  rdoc.title = "PgLtree"
+  rdoc.options << "--line-numbers"
+  rdoc.rdoc_files.include("README.rdoc")
+  rdoc.rdoc_files.include("lib/**/*.rb")
 end
 
-Rake::TestTask.new(:test) do |t|
-  t.libs << 'lib'
-  t.libs << 'test'
-  t.pattern = 'test/**/*_test.rb'
-  t.verbose = false
-end
+RSpec::Core::RakeTask.new(:spec)
 
+task default: :spec

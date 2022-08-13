@@ -1,28 +1,12 @@
 module PgLtree
-  # Implementatios Postgres ltree for ActiveRecord
-  #
-  # @see [ActiveRecord::Base]
-  # @see http://www.postgresql.org/docs/current/static/ltree.html
-  module Ltree
-    # Initialzie ltree for active model
-    #
-    # @param column [String] ltree column name
-    def ltree(column = :path, cascade: true)
-      cattr_accessor :ltree_path_column
+  module Model
+    extend ActiveSupport::Concern
 
-      self.ltree_path_column = column
-
-      if cascade
-        after_update :cascade_update
-        after_destroy :cascade_destroy
+    class_methods do
+      def ltree_path_column
+        ltree_option_for :column
       end
 
-      extend ClassMethods
-      include InstanceMethods
-    end
-
-    # Define class methods
-    module ClassMethods
       # Get roots
       #
       # @return [ActiveRecord::Relation] relations of node's roots
@@ -43,9 +27,9 @@ module PgLtree
       # @return [ActiveRecord::Relation] relations of node's leaves
       def leaves
         subquery = unscoped.select("#{table_name}.#{ltree_path_column}")
-                           .from("#{table_name} AS subquery")
-                           .where("#{table_name}.#{ltree_path_column} <> subquery.#{ltree_path_column}")
-                           .where("#{table_name}.#{ltree_path_column} @> subquery.#{ltree_path_column}")
+          .from("#{table_name} AS subquery")
+          .where("#{table_name}.#{ltree_path_column} <> subquery.#{ltree_path_column}")
+          .where("#{table_name}.#{ltree_path_column} @> subquery.#{ltree_path_column}")
 
         where.not ltree_path_column => subquery
       end
@@ -67,8 +51,7 @@ module PgLtree
       end
     end
 
-    # Define instance methods
-    module InstanceMethods
+    included do
       # Get default scope of ltree
       #
       # @return current class
@@ -79,9 +62,7 @@ module PgLtree
       # Get lTree column
       #
       # @return [String] ltree column name
-      def ltree_path_column
-        ltree_scope.ltree_path_column
-      end
+      delegate :ltree_path_column, to: :ltree_scope
 
       # Get lTree value
       #
@@ -138,21 +119,23 @@ module PgLtree
       #
       # return [Object] root node
       def root
-        ltree_scope.where("#{ltree_scope.table_name}.#{ltree_path_column} = SUBPATH(?, 0, 1)", ltree_path).first
+        ltree_scope.where("#{self.class.table_name}.#{ltree_path_column} = SUBPATH(?, 0, 1)", ltree_path).first
       end
 
       # Get parent of the node
       #
       # return [Object] root node
       def parent
-        ltree_scope.find_by "#{ltree_scope.table_name}.#{ltree_path_column} = SUBPATH(?, 0, NLEVEL(?) - 1)", ltree_path, ltree_path
+        ltree_scope.find_by "#{self.class.table_name}.#{ltree_path_column} = SUBPATH(?, 0, NLEVEL(?) - 1)", ltree_path,
+          ltree_path
       end
 
       # Get leaves of the node
       #
       # @return [ActiveRecord::Relation]
       def leaves
-        ltree_scope.leaves.where("#{ltree_scope.table_name}.#{ltree_path_column} <@ ?", ltree_path).where.not ltree_path_column => ltree_path
+        ltree_scope.leaves.where("#{self.class.table_name}.#{ltree_path_column} <@ ?",
+          ltree_path).where.not ltree_path_column => ltree_path
       end
 
       # Check what current node have leaves
@@ -166,7 +149,7 @@ module PgLtree
       #
       # @return [ActiveRecord::Relation]
       def self_and_ancestors
-        ltree_scope.where("#{ltree_scope.table_name}.#{ltree_path_column} @> ?", ltree_path)
+        ltree_scope.where("#{self.class.table_name}.#{ltree_path_column} @> ?", ltree_path)
       end
 
       # Get ancestors
@@ -180,15 +163,7 @@ module PgLtree
       #
       # @return [ActiveRecord::Relation]
       def self_and_descendants
-        ltree_scope.where("#{ltree_scope.table_name}.#{ltree_path_column} <@ ?", ltree_path)
-      end
-
-      # Get self and descendants
-      # @deprecated Please use {#self_and_descendants} instead
-      # @return [ActiveRecord::Relation]
-      def self_and_descendents
-        warn '[DEPRECATION] `self_and_descendents` is deprecated. Please use `self_and_descendants` instead.'
-        self_and_descendants
+        ltree_scope.where("#{self.class.table_name}.#{ltree_path_column} <@ ?", ltree_path)
       end
 
       # Get descendants
@@ -198,20 +173,12 @@ module PgLtree
         self_and_descendants.where.not ltree_path_column => ltree_path
       end
 
-      # Get descendants
-      # @deprecated Please use {#descendants} instead
-      # @return [ActiveRecord::Relation]
-      def descendents
-        warn '[DEPRECATION] `descendents` is deprecated. Please use `descendants` instead.'
-        descendants
-      end
-
       # Get self and siblings
       #
       # @return [ActiveRecord::Relation]
       def self_and_siblings
         ltree_scope.where(
-          "SUBPATH(?, 0, NLEVEL(?) - 1) @> #{ltree_scope.table_name}.#{ltree_path_column} AND nlevel(#{ltree_scope.table_name}.#{ltree_path_column}) = NLEVEL(?)",
+          "SUBPATH(?, 0, NLEVEL(?) - 1) @> #{self.class.table_name}.#{ltree_path_column} AND nlevel(#{self.class.table_name}.#{ltree_path_column}) = NLEVEL(?)",
           ltree_path, ltree_path, ltree_path
         )
       end
@@ -227,23 +194,25 @@ module PgLtree
       #
       # @return [ActiveRecord::Relation]
       def children
-        ltree_scope.where "? @> #{ltree_scope.table_name}.#{ltree_path_column} AND nlevel(#{ltree_scope.table_name}.#{ltree_path_column}) = NLEVEL(?) + 1",
-                          ltree_path, ltree_path
+        ltree_scope.where "? @> #{self.class.table_name}.#{ltree_path_column} AND nlevel(#{self.class.table_name}.#{ltree_path_column}) = NLEVEL(?) + 1",
+          ltree_path, ltree_path
       end
 
       # Update all childen for current path
       #
       # @return [ActiveRecord::Relation]
       def cascade_update
-        ltree_scope.where(["#{ltree_scope.table_name}.#{ltree_path_column} <@ ?", ltree_path_before_last_save]).where(["#{ltree_scope.table_name}.#{ltree_path_column} != ?", ltree_path])
-                   .update_all ["#{ltree_path_column} = ? || subpath(#{ltree_path_column}, nlevel(?))", ltree_path, ltree_path_before_last_save]
+        ltree_scope
+          .where("#{self.class.table_name}.#{ltree_path_column} <@ ?", ltree_path_before_last_save)
+          .where("#{self.class.table_name}.#{ltree_path_column} != ?", ltree_path)
+          .update_all("#{ltree_path_column} = ? || subpath(#{ltree_path_column}, nlevel(?))", ltree_path, ltree_path_before_last_save)
       end
 
       # Delete all children for current path
       #
       # @return [ActiveRecord::Relation]
       def cascade_destroy
-        ltree_scope.where("#{ltree_scope.table_name}.#{ltree_path_column} <@ ?", ltree_path_in_database).destroy_all
+        ltree_scope.where("#{self.class.table_name}.#{ltree_path_column} <@ ?", ltree_path_in_database).destroy_all
       end
     end
   end

@@ -1,40 +1,35 @@
 # PgLtree
 
-**Gem that allows use `ltree` in ActiveRecord models**.
-
-It uses a implementation based around PostgreSQL's [ltree](http://www.postgresql.org/docs/current/static/ltree.html) data type, associated functions and operators.
-
-|             |                                 |
-| ----------- | :-----------------------------: |
-| **Author**  |       Andrei Panamarenka        |
-| **Version** |     1.1.9 (August 13, 2022)   |
-| **License** | Released under the MIT license. |
-
-##
-
 [![Gem Version](https://badge.fury.io/rb/pg_ltree.svg)](http://badge.fury.io/rb/pg_ltree)
-[![Build Status](https://github.com/sjke/pg_ltree/actions/workflows/tests.yml/badge.svg)](https://github.com/sjke/pg_ltree/actions/workflows/tests.yml)
-[![Code Climate](https://codeclimate.com/github/sjke/pg_ltree/badges/gpa.svg)](https://codeclimate.com/github/sjke/pg_ltree)
+[![Ruby Style Guide](https://img.shields.io/badge/code_style-rubocop-brightgreen.svg)](https://github.com/rubocop/rubocop)
+[![Build Status](https://github.com/sjke/pg_ltree/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/sjke/pg_ltree/actions/workflows/tests.yml?query=branch%3A+master+)
 [![RubyDoc](http://inch-ci.org/github/sjke/pg_ltree.svg?branch=master)](http://www.rubydoc.info/github/sjke/pg_ltree/)
 
-## Support
-
-* **_Ruby_** >= 2.0, >= 3.0
-* **_Rails_** >= 4, < 8
-* **_Pg adapter (gem 'pg')_** >= 1.0, < 2
+Adds PostgreSQL's [ltree](http://www.postgresql.org/docs/current/static/ltree.html) support for `ActiveRecord` models
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
-    gem 'pg_ltree', '1.1.9'
+    gem 'pg_ltree'
 
 And then execute:
 
     $ bundle
 
-Add ltree extension to PostgreSQL:
+Or install it yourself as:
 
+    $ gem install pg_ltree
+
+## Required
+
+* **_Ruby_** >= 2.0
+* **_Rails_** >= 5.2, < 8
+* **_Pg adapter (gem 'pg')_** >= 1.0, < 2
+
+
+## How to use
+Enable `ltree` extension:
 ```ruby
 class AddLtreeExtension < ActiveRecord::Migration
   def change
@@ -43,43 +38,31 @@ class AddLtreeExtension < ActiveRecord::Migration
 end
 ```
 
-Update your model:
-
+Add column with `ltree` type for your model
 ```ruby
-class AnyModel < ActiveRecord::Migration
+class AddLtreePathToModel < ActiveRecord::Migration
   def change
-    add_column :any_model, :path, :ltree
-
-    add_index :any_model, :path, using: :gist
+    add_column :nodes, :path, :ltree
+    add_index :nodes, :path, using: :gist
   end
 end
 ```
 
-Run migrations:
-
-    $ bundle exec rake db:migrate
-
-## Usage
-
+Initialize `ltree` module in your model
 ```ruby
-  class AnyModel < ActiveRecord::Base
+  class Node < ActiveRecord::Base
     ltree :path
-    # ltree :path, cascade: false # Disable cascade update and delete
+    # ltree :path, cascade_update: false # Disable cascade update
+    # ltree :path, cascade_destroy: false # Disable cascade destory
+    # ltree :path, cascade_update: false, cascade_destroy: false # Disable cascade callbacks
   end
-
-  root     = AnyModel.create!(path: 'Top')
-  child    = AnyModel.create!(path: 'Top.Science')
-  subchild = AnyModel.create!(path: 'Top.Science.Astronomy')
-
-  root.parent   # => nil
-  child.parent # => root
-  root.children # => [child]
-  root.children.first.children.first # => subchild
-  subchild.root # => root
 ```
 
-For find a lots of additional information about PgLtee see:
+## Contributing
+Bug reports and pull requests are welcome on GitHub at https://github.com/sjke/pg_ltree
 
-* [Wiki](https://github.com/sjke/pg_ltree/wiki)
-* [List of methods for work with LTree](https://github.com/sjke/pg_ltree/wiki/List-of-methods-for-work-with-LTree)
-* [Module SCOPE FOR (For not uniq path in tree)](https://github.com/sjke/pg_ltree/wiki/Module-SCOPED-FOR)
+## Changelog
+See [CHANGELOG](CHANGELOG.md) for details.
+
+## License
+The gem is available as open source under the terms of the [MIT License](MIT-LICENSE).
