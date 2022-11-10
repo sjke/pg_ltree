@@ -1,3 +1,7 @@
+## 1.2.0
+
+* [IMPROVE] Fully rewrote gem using rails autoload, modules and Rspec as main test framework ([#38](https://github.com/sjke/pg_ltree/pull/38))
+
 ## 1.1.9
 
 * [IMPROVE] Add Rails 7 version support ([#29](https://github.com/sjke/pg_ltree/pull/33) by [@chrisortman](https://github.com/chrisortman))
