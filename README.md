@@ -2,7 +2,7 @@
 
 [![Gem Version](https://badge.fury.io/rb/pg_ltree.svg)](http://badge.fury.io/rb/pg_ltree)
 [![Ruby Style Guide](https://img.shields.io/badge/code_style-rubocop-brightgreen.svg)](https://github.com/rubocop/rubocop)
-[![Build Status](https://github.com/sjke/pg_ltree/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/sjke/pg_ltree/actions/workflows/tests.yml?query=branch%3A+master+)
+[![Build Status](https://github.com/sjke/pg_ltree/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/sjke/pg_ltree/actions/workflows/tests.yml?query=branch%3Amaster)
 [![RubyDoc](http://inch-ci.org/github/sjke/pg_ltree.svg?branch=master)](http://www.rubydoc.info/github/sjke/pg_ltree/)
 
 Adds PostgreSQL's [ltree](http://www.postgresql.org/docs/current/static/ltree.html) support for `ActiveRecord` models
