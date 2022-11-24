@@ -28,6 +28,10 @@ module PgLtree
         send(:include, PgLtree::Callbacks)
       end
 
+      def ltree_options
+        @ltree_options || superclass.ltree_options
+      end
+
       def ltree_option_for(key)
         ltree_options[key]
       end

@@ -41,6 +41,30 @@ RSpec.describe PgLtree::Callbacks do
         expect(subject.pluck(:path)).to include("NewTop", "Top.Science")
       end
     end
+
+    describe "cascade when single table inheritance records" do
+      let!(:base_class) do
+        Class.new(ActiveRecord::Base) do
+          self.table_name = "nodes"
+          ltree :path, cascade_update: true
+          def ltree_scope
+            self.class.base_class
+          end
+        end
+      end
+      subject { Class.new(base_class) {} }
+
+      before do
+        subject.create!([{path: "Top"}, {path: "Top.Science"}])
+        expect(subject.pluck(:path)).to include("Top", "Top.Science")
+      end
+
+      it "updates child record paths when parent path in changed" do
+        subject.find_by(path: "Top").update path: "NewTop"
+
+        expect(subject.pluck(:path)).to include("NewTop", "NewTop.Science")
+      end
+    end
   end
 
   context "desctroy records" do

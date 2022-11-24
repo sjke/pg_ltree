@@ -10,6 +10,10 @@ RSpec.describe PgLtree::Base do
     end
   end
 
+  let!(:sub_class) do
+    Class.new(model_class) {}
+  end
+
   describe "inject PgLtree modules" do
     describe "when call #ltree" do
       subject { model_class.included_modules }
@@ -50,6 +54,10 @@ RSpec.describe PgLtree::Base do
       it "returns ltree option '#{key}' with '#{value}' as value" do
         expect(subject.ltree_option_for(key)).to eq(value)
       end
+    end
+
+    it "subclass of ltree can view options" do
+      expect(sub_class.ltree_options).to eq(cascade_destroy: true, cascade_update: true, column: :path)
     end
   end
 end
