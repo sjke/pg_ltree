@@ -1,3 +1,7 @@
+## 1.2.1
+
+* [FIXED] Fix `undefined method` issue with STI models ([#42](https://github.com/sjke/pg_ltree/pull/42) by [@mweitzel](https://github.com/mweitzel))
+
 ## 1.2.0
 
 * [IMPROVE] Fully rewrote gem using rails autoload, modules and Rspec as main test framework ([#38](https://github.com/sjke/pg_ltree/pull/38))
