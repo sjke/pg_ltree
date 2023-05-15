@@ -27,8 +27,10 @@ Or install it yourself as:
 * **_Rails_** >= 5.2, < 8
 * **_Pg adapter (gem 'pg')_** >= 1.0, < 2
 
-
 ## How to use
+
+#### Basic usage
+
 Enable `ltree` extension:
 ```ruby
 class AddLtreeExtension < ActiveRecord::Migration
@@ -57,6 +59,27 @@ Initialize `ltree` module in your model
     # ltree :path, cascade_update: false, cascade_destroy: false # Disable cascade callbacks
   end
 ```
+
+#### Overriding `ltree_scope`
+
+You can cluster trees by overriding `ltree_scope`. In the following example a `LessonPlan` can have a set of `Tutorial`s. The tutorials in that lesson plan can be structured using a tree hierarchy.
+```ruby
+class LessonPlan < ActiveRecord::Base
+  has_many :tutorials
+end
+
+class Tutorial < ActiveRecord::Base
+  belongs_to :lesson_plan
+
+  ltree :path
+
+  def ltree_scope
+    self.class.base_class.where(lesson_plan_id:)
+  end
+end
+```
+
+Using this pattern the `sibling`/`parent`/`descendent` methods (as well as cascading updates and destroys) will scope to pages associated with that lesson plan. This is in contrast to `Pages.all`, which would be the default scope.
 
 ## Contributing
 Bug reports and pull requests are welcome on GitHub at https://github.com/sjke/pg_ltree
