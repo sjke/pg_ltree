@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
 
   s.files = Dir["{lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]
 
-  s.add_dependency "activerecord", ">= 5.2", "< 8.0"
+  s.add_dependency "activerecord", ">= 5.2", "< 9.0"
   s.add_dependency "pg", ">= 0.19", "< 2"
 
   s.add_development_dependency "bundler"
