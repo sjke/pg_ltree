@@ -24,7 +24,7 @@ Or install it yourself as:
 ## Required
 
 * **_Ruby_** >= 2.0
-* **_Rails_** >= 5.2, < 8
+* **_Rails_** >= 5.2, < 9
 * **_Pg adapter (gem 'pg')_** >= 1.0, < 2
 
 ## How to use
