@@ -13,11 +13,11 @@ Gem::Specification.new do |s|
   s.summary = "Organize ActiveRecord model into a tree structure using PostgreSQL LTree"
   s.description = "Organize ActiveRecord model into a tree structure using PostgreSQL LTree"
   s.license = "MIT"
-  s.required_ruby_version = ">= 2.0.0"
+  s.required_ruby_version = ">= 2.7.0"
 
   s.files = Dir["{lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]
 
-  s.add_dependency "activerecord", ">= 5.2", "< 8.0"
+  s.add_dependency "activerecord", ">= 5.2", "< 9.0"
   s.add_dependency "pg", ">= 0.19", "< 2"
 
   s.add_development_dependency "bundler"
@@ -25,7 +25,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency "pry"
   s.add_development_dependency "standard"
   s.add_development_dependency "yard", "~> 0.9.28"
-  s.add_development_dependency "appraisal", "~> 2.4"
+  s.add_development_dependency "appraisal", "~> 2.5"
   s.add_development_dependency "rspec", "~> 3.11"
   s.add_development_dependency "database_cleaner", "~> 2.0"
 end
