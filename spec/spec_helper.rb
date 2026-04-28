@@ -2,6 +2,11 @@ require "bundler/setup"
 
 require "logger"
 require "active_record"
+require "simplecov"
+SimpleCov.start do
+  add_filter "/spec/"
+end
+
 require "pg_ltree"
 
 require_relative "support/database"

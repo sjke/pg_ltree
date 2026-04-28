@@ -67,6 +67,25 @@ RSpec.describe PgLtree::Callbacks do
     end
   end
 
+    describe "when cascade is true (deprecated)" do
+      subject do
+        Class.new(ActiveRecord::Base) do
+          self.table_name = "nodes"
+          ltree :path, cascade: true
+        end
+      end
+
+      it "enables cascade update and destroy" do
+        subject.create!([{path: "Top"}, {path: "Top.Science"}])
+        subject.find_by(path: "Top").update path: "NewTop"
+        expect(subject.pluck(:path)).to include("NewTop", "NewTop.Science")
+
+        subject.find_by(path: "NewTop").destroy
+        expect(subject.count).to be_zero
+      end
+    end
+  end
+
   context "desctroy records" do
     describe "when cascade_destroy is true" do
       subject do

@@ -1,12 +1,15 @@
 require "spec_helper"
 
 RSpec.describe PgLtree::Model do
-  subject do
-    Class.new(ActiveRecord::Base) do
-      self.table_name = "nodes"
-      ltree :path
+  context "with default configuration" do
+    subject do
+      Class.new(ActiveRecord::Base) do
+        self.table_name = "nodes"
+        ltree :path
+      end
     end
-  end
+
+    include_examples "ltree querying"
 
   before do
     subject.create!([
@@ -222,11 +225,23 @@ RSpec.describe PgLtree::Model do
   end
 
   describe ".siblings" do
-    it "returns sibling paths for selected record" do
-      expect(subject.find_by(path: "Top.Collections.Pictures.Astronomy.Stars").siblings.pluck(:path)).to include(*%w[
-        Top.Collections.Pictures.Astronomy.Galaxies
-        Top.Collections.Pictures.Astronomy.Astronauts
-      ])
+  context "with custom column name" do
+    subject do
+      Class.new(ActiveRecord::Base) do
+        self.table_name = "nodes"
+        ltree :custom_path_column
+      end
+    end
+
+    before do
+      subject.create!(custom_path_column: "Root")
+      subject.create!(custom_path_column: "Root.Child")
+    end
+
+    it "uses the custom column name" do
+      expect(subject.ltree_path_column).to eq(:custom_path_column)
+      expect(subject.roots.first.custom_path_column).to eq("Root")
+      expect(subject.find_by(custom_path_column: "Root").children.first.custom_path_column).to eq("Root.Child")
     end
   end
 end
