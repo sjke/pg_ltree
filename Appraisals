@@ -17,7 +17,7 @@ def add_appraise_for(activerecord_version:, pg_version:)
   end
 end
 
-SUPPORTED_PG_VERSIONS = ["~> 1.0", "~> 1.1", "~> 1.2", "~> 1.3", "~> 1.4", "~> 1.5"]
+SUPPORTED_PG_VERSIONS = ["~> 1.0", "~> 1.1", "~> 1.2", "~> 1.3", "~> 1.4", "~> 1.5", "~> 1.6"]
 
 if Gem::Version.new(RUBY_VERSION) <= Gem::Version.new("3.0")
   SUPPORTED_PG_VERSIONS.map do |pg_version|
@@ -46,5 +46,6 @@ end
 if Gem::Version.new(RUBY_VERSION) >= Gem::Version.new("3.2")
   SUPPORTED_PG_VERSIONS.map do |pg_version|
     add_appraise_for(activerecord_version: "~> 8.0", pg_version: pg_version)
+    add_appraise_for(activerecord_version: "~> 8.1", pg_version: pg_version)
   end
 end
