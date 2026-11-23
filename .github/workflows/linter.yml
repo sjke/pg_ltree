@@ -17,8 +17,8 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 2.7
+          ruby-version: '3.4'
           bundler-cache: true
 
       - name: Run linter
-        run: bundle exec rake standard
+        run: bundle exec rake lint

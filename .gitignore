@@ -8,3 +8,11 @@ doc
 coverage
 database.yml
 *.lock
+
+# .graphifyignore
+vendor/
+node_modules/
+dist/
+*.generated.py
+graphify-out/
+.agents/
