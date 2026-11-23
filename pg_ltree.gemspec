@@ -15,7 +15,7 @@ Gem::Specification.new do |s|
   s.license = "MIT"
   s.required_ruby_version = ">= 2.7.0"
 
-  s.files = Dir["{lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]
+  s.files = Dir["{lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md", "CHANGELOG.md"]
 
   s.add_dependency "activerecord", ">= 5.2", "< 9.0"
   s.add_dependency "pg", ">= 0.19", "< 2"
@@ -24,8 +24,9 @@ Gem::Specification.new do |s|
   s.add_development_dependency "rake"
   s.add_development_dependency "pry"
   s.add_development_dependency "standard"
-  s.add_development_dependency "yard", "~> 0.9.28"
+  s.add_development_dependency "yard", "~> 0.9"
   s.add_development_dependency "appraisal", "~> 2.5"
-  s.add_development_dependency "rspec", "~> 3.11"
-  s.add_development_dependency "database_cleaner", "~> 2.0"
+  s.add_development_dependency "rspec", "~> 3.13"
+  s.add_development_dependency "database_cleaner", "~> 2.1"
+  s.add_development_dependency "simplecov", "~> 0.22"
 end

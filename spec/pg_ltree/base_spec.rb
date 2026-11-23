@@ -22,7 +22,7 @@ RSpec.describe PgLtree::Base do
         expect(subject).to include(PgLtree::Model)
       end
 
-      it "includes PgLtree::Model" do
+      it "includes PgLtree::Callbacks" do
         expect(subject).to include(PgLtree::Callbacks)
       end
     end
@@ -34,7 +34,7 @@ RSpec.describe PgLtree::Base do
         expect(subject).not_to include(PgLtree::Model)
       end
 
-      it "not includes PgLtree::Model" do
+      it "not includes PgLtree::Callbacks" do
         expect(subject).not_to include(PgLtree::Callbacks)
       end
     end
@@ -58,6 +58,20 @@ RSpec.describe PgLtree::Base do
 
     it "subclass of ltree can view options" do
       expect(sub_class.ltree_options).to eq(cascade_destroy: true, cascade_update: true, column: :path)
+    end
+
+    it "exposes immutable PgLtree::Options via ltree_config" do
+      expect(subject.ltree_config).to be_a(PgLtree::Options)
+      expect(subject.ltree_config).to be_frozen
+    end
+
+    it "raises ArgumentError for invalid scope option" do
+      expect do
+        Class.new(ActiveRecord::Base) do
+          self.table_name = "nodes"
+          ltree :path, scope: 123
+        end
+      end.to raise_error(ArgumentError, /Invalid ltree :scope option/)
     end
   end
 end
