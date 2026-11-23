@@ -17,34 +17,55 @@ def add_appraise_for(activerecord_version:, pg_version:)
   end
 end
 
-SUPPORTED_PG_VERSIONS = ["~> 1.0", "~> 1.1", "~> 1.2", "~> 1.3", "~> 1.4", "~> 1.5"]
+ruby_version = Gem::Version.new(RUBY_VERSION)
 
-if Gem::Version.new(RUBY_VERSION) <= Gem::Version.new("3.0")
-  SUPPORTED_PG_VERSIONS.map do |pg_version|
+supported_pg_versions = if ruby_version >= Gem::Version.new("3.2")
+  ["~> 1.5", "~> 1.6", "~> 1.7"]
+elsif ruby_version >= Gem::Version.new("3.1")
+  ["~> 1.0", "~> 1.1", "~> 1.2", "~> 1.3", "~> 1.4", "~> 1.5", "~> 1.6", "~> 1.7"]
+else
+  ["~> 1.0", "~> 1.1", "~> 1.2", "~> 1.3", "~> 1.4", "~> 1.5", "~> 1.6"]
+end
+
+if ruby_version < Gem::Version.new("3.0")
+  supported_pg_versions.each do |pg_version|
     add_appraise_for(activerecord_version: "~> 5.2", pg_version: pg_version)
   end
 end
 
-SUPPORTED_PG_VERSIONS.map do |pg_version|
-  add_appraise_for(activerecord_version: "~> 6.0", pg_version: pg_version)
-  add_appraise_for(activerecord_version: "~> 6.1", pg_version: pg_version)
+if ruby_version < Gem::Version.new("3.1")
+  supported_pg_versions.each do |pg_version|
+    add_appraise_for(activerecord_version: "~> 6.0", pg_version: pg_version)
+  end
 end
 
-if Gem::Version.new(RUBY_VERSION) >= Gem::Version.new("2.7")
-  SUPPORTED_PG_VERSIONS.map do |pg_version|
+if ruby_version < Gem::Version.new("3.2")
+  supported_pg_versions.each do |pg_version|
+    add_appraise_for(activerecord_version: "~> 6.1", pg_version: pg_version)
+  end
+end
+
+if ruby_version >= Gem::Version.new("2.7") && ruby_version < Gem::Version.new("3.4")
+  supported_pg_versions.each do |pg_version|
     add_appraise_for(activerecord_version: "~> 7.0", pg_version: pg_version)
+  end
+end
+
+if ruby_version >= Gem::Version.new("2.7") && ruby_version < Gem::Version.new("4.0")
+  supported_pg_versions.each do |pg_version|
     add_appraise_for(activerecord_version: "~> 7.1", pg_version: pg_version)
   end
 end
 
-if Gem::Version.new(RUBY_VERSION) >= Gem::Version.new("3.1")
-  SUPPORTED_PG_VERSIONS.map do |pg_version|
+if ruby_version >= Gem::Version.new("3.1") && ruby_version < Gem::Version.new("4.0")
+  supported_pg_versions.each do |pg_version|
     add_appraise_for(activerecord_version: "~> 7.2", pg_version: pg_version)
   end
 end
 
-if Gem::Version.new(RUBY_VERSION) >= Gem::Version.new("3.2")
-  SUPPORTED_PG_VERSIONS.map do |pg_version|
+if ruby_version >= Gem::Version.new("3.2")
+  supported_pg_versions.each do |pg_version|
     add_appraise_for(activerecord_version: "~> 8.0", pg_version: pg_version)
+    add_appraise_for(activerecord_version: "~> 8.1", pg_version: pg_version)
   end
 end

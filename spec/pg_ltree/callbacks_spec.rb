@@ -42,6 +42,22 @@ RSpec.describe PgLtree::Callbacks do
       end
     end
 
+    describe "when updating non-path attribute" do
+      subject do
+        Class.new(ActiveRecord::Base) do
+          self.table_name = "nodes"
+          ltree :path, cascade_update: true
+        end
+      end
+
+      it "keeps child paths intact" do
+        subject.create!([{path: "Top", user_id: 1}, {path: "Top.Science", user_id: 1}])
+        subject.find_by(path: "Top").update!(user_id: 2)
+
+        expect(subject.order(:id).pluck(:path)).to eq(["Top", "Top.Science"])
+      end
+    end
+
     describe "cascade when single table inheritance records" do
       let!(:base_class) do
         Class.new(ActiveRecord::Base) do
@@ -65,9 +81,27 @@ RSpec.describe PgLtree::Callbacks do
         expect(subject.pluck(:path)).to include("NewTop", "NewTop.Science")
       end
     end
+
+    describe "when cascade is true (deprecated)" do
+      it "emits a deprecation warning and enables cascade update and destroy" do
+        expect(PgLtree.deprecator).to receive(:warn).with("'cascade' param is deprecated. Use 'cascade_update' and 'cascade_destroy' instead.")
+
+        klass = Class.new(ActiveRecord::Base) do
+          self.table_name = "nodes"
+          ltree :path, cascade: true
+        end
+
+        klass.create!([{path: "Top"}, {path: "Top.Science"}])
+        klass.find_by(path: "Top").update path: "NewTop"
+        expect(klass.pluck(:path)).to include("NewTop", "NewTop.Science")
+
+        klass.find_by(path: "NewTop").destroy
+        expect(klass.count).to be_zero
+      end
+    end
   end
 
-  context "desctroy records" do
+  context "destroy records" do
     describe "when cascade_destroy is true" do
       subject do
         Class.new(ActiveRecord::Base) do

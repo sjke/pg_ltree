@@ -1,3 +1,13 @@
+## 2.0.0
+
+* [IMPROVE] Refactor `PgLtree::Model` and configuration into modular concerns (`PgLtree::Options`, `PgLtree::Configuration`, `PgLtree::Model::Sql`, `Querying`, `Traversal`, `Predicates`, `PathInfo`, `Cascade`)
+* [IMPROVE] Add full Rails 8.1 (`activerecord ~> 8.1`), `pg ~> 1.7`, and PostgreSQL 18 support
+* [IMPROVE] Replace deprecated `ActiveSupport::Deprecation.warn` with `PgLtree.deprecator`
+* [IMPROVE] Replace `ActiveRecord::Base.connection` with `connection_pool.with_connection`, wrap `NLEVEL` in `Arel.sql`, and quote table/column names consistently
+* [ADDED] Add declarative `scope:` option (`Symbol`, `Array<Symbol>`, `Proc`) to `ltree`
+* [OPTIMIZE] Compute `#depth` in memory without DB round-trips, optimize `#leaf?` with `EXISTS`, `#leaves` with `NOT EXISTS`, `#parent` short-circuit for root nodes, and skip `cascade_update` when path did not change
+* [FIXED] Fix `spec/pg_ltree/model_spec.rb`, `spec/pg_ltree/callbacks_spec.rb`, and `spec/pg_ltree/scope_spec.rb`
+
 ## 1.2.2
 
 * [IMPROVE] Add Rails 7.1, 7.2, 8 support ([#50](https://github.com/sjke/pg_ltree/pull/50) by [@olivier-thatch](https://github.com/olivier-thatch))
